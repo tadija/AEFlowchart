@@ -1,0 +1,50 @@
+// StartEnd (ctrl shift s)
+
+#import 'AEFlowchart.js'
+
+/*  call AEFlowchart main function with custom name and shape function  */
+flowchart("StartEnd", startEndShape);
+
+/*  draw start-end rounded rectangle shape for given label  */
+function startEndShape(label)
+{
+  var parentGroup = [label parentGroup];
+  var labelFrame = [label frame];
+
+  // add shape
+  var shape = [parentGroup addLayerOfType:"rectangle"];
+  var shapeFrame = [shape frame];
+  var shapeStyle = [shape style];
+  var firstObject = [[shape layers] firstObject];
+
+  // set frame
+  [shapeFrame setWidth:[labelFrame width] + 40];
+  [shapeFrame setHeight:[labelFrame height] + 20];
+  [shapeFrame setMidX:[labelFrame midX]];
+  [shapeFrame setMidY:[labelFrame midY]];
+
+  // round corners (calculate pill radius)
+  var radius;
+  if ([shapeFrame width] >= [shapeFrame height]) {
+    radius = [shapeFrame height] / 2;
+  } else {
+    radius = [shapeFrame width] / 2;
+  }
+  [firstObject setFixedRadius:Math.round(radius)];
+  [firstObject resetPointsBasedOnUserInteraction];
+
+  // set gradient fill
+  var fills = [shapeStyle fills];
+  if([fills count] <= 0) [fills addNewStylePart];
+  var shapeFill = [shapeStyle fill];
+  [shapeFill setFillType: 1];
+  var gradient = [shapeFill gradient];
+  [gradient setColor: [MSColor colorWithHex:"FF5E3A" alpha:1] atIndex: 0];
+  [gradient setColor: [MSColor colorWithHex:"FF2A68" alpha:1] atIndex: 1];
+
+  // add default inner shadow
+  var innerShadows = [shapeStyle innerShadows];
+  if([innerShadows count] <= 0) [innerShadows addNewStylePart];
+
+  return shape;
+}

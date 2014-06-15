@@ -1,0 +1,39 @@
+// Decision (ctrl shift d)
+
+#import 'AEFlowchart.js'
+
+/*  call AEFlowchart main function with custom name and shape function  */
+flowchart("Decision", decisionShape);
+
+/*  draw decision diamond shape for given label  */
+function decisionShape(label)
+{
+  var parentGroup = [label parentGroup];
+  var labelFrame = [label frame];
+
+  // add shape
+  var shape = [parentGroup addLayerOfType:"rectangle"];
+  var shapeFrame = [shape frame];
+  var shapeStyle = [shape style];
+
+  // set frame
+  [shapeFrame setWidth:[labelFrame width] + 40];
+  [shapeFrame setHeight:[labelFrame height] + 30];
+  [shapeFrame setMidX:[labelFrame midX]];
+  [shapeFrame setMidY:[labelFrame midY]];
+
+  // set gradient fill
+  var fills = [shapeStyle fills];
+  if([fills count] <= 0) [fills addNewStylePart];
+  var shapeFill = [shapeStyle fill];
+  [shapeFill setFillType: 1];
+  var gradient = [shapeFill gradient];
+  [gradient setColor: [MSColor colorWithHex:"C644FC" alpha:1] atIndex: 0];
+  [gradient setColor: [MSColor colorWithHex:"5856D6" alpha:1] atIndex: 1];
+
+  // add default inner shadow
+  var innerShadows = [shapeStyle innerShadows];
+  if([innerShadows count] <= 0) [innerShadows addNewStylePart];
+
+  return shape;
+}
