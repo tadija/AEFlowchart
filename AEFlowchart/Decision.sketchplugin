@@ -11,14 +11,28 @@ function decisionShape(label)
   var parentGroup = [label parentGroup];
   var labelFrame = [label frame];
 
-  // add shape
-  var shape = [parentGroup addLayerOfType:"rectangle"];
+  // draw NSBezierPath
+  var shapePath = [NSBezierPath bezierPath];
+  // set the starting point of the shape.
+  [shapePath moveToPoint:CGPointMake(100.0, 0.0)];
+  // draw the lines
+  [shapePath lineToPoint:CGPointMake(200.0, 40.0)];
+  [shapePath lineToPoint:CGPointMake(100.0, 80.0)];
+  [shapePath lineToPoint:CGPointMake(0.0, 40.0)];
+  [shapePath closePath];
+
+  // create BCBezierPath with NSBezierPath
+  var bcPath = [[BCBezierPath alloc] init];
+  [bcPath setPath: shapePath];
+
+  // create custom shape
+  var shape = [MSShapeGroup shapeWithBezierPath: bcPath];
   var shapeFrame = [shape frame];
   var shapeStyle = [shape style];
 
   // set frame
-  [shapeFrame setWidth:[labelFrame width] + 40];
-  [shapeFrame setHeight:[labelFrame height] + 30];
+  [shapeFrame setWidth:[labelFrame width] + ([labelFrame height] * 2.0) + 32];
+  [shapeFrame setHeight:[shapeFrame width] / 2];
   [shapeFrame setMidX:[labelFrame midX]];
   [shapeFrame setMidY:[labelFrame midY]];
 
@@ -28,8 +42,8 @@ function decisionShape(label)
   var shapeFill = [shapeStyle fill];
   [shapeFill setFillType: 1];
   var gradient = [shapeFill gradient];
-  [gradient setColor: [MSColor colorWithHex:"C644FC" alpha:1] atIndex: 0];
-  [gradient setColor: [MSColor colorWithHex:"5856D6" alpha:1] atIndex: 1];
+  [gradient setColor: [MSColor colorWithHex:"C644FC" alpha:1] atIndex:0];
+  [gradient setColor: [MSColor colorWithHex:"5856D6" alpha:1] atIndex:1];
 
   // add default inner shadow
   var innerShadows = [shapeStyle innerShadows];

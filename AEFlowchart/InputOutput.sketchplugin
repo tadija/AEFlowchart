@@ -11,14 +11,28 @@ function inputOutputShape(label)
   var parentGroup = [label parentGroup];
   var labelFrame = [label frame];
 
-  // add shape
-  var shape = [parentGroup addLayerOfType:"rectangle"];
+  // draw NSBezierPath
+  var shapePath = [NSBezierPath bezierPath];
+  // set the starting point of the shape.
+  [shapePath moveToPoint:CGPointMake(40.0, 0.0)];
+  // draw the lines
+  [shapePath lineToPoint:CGPointMake(200.0, 0.0)];
+  [shapePath lineToPoint:CGPointMake(160.0, 40.0)];
+  [shapePath lineToPoint:CGPointMake(0.0, 40.0)];
+  [shapePath closePath];
+
+  // create BCBezierPath with NSBezierPath
+  var bcPath = [[BCBezierPath alloc] init];
+  [bcPath setPath: shapePath];
+
+  // create custom shape
+  var shape = [MSShapeGroup shapeWithBezierPath: bcPath];
   var shapeFrame = [shape frame];
   var shapeStyle = [shape style];
 
   // set frame
-  [shapeFrame setWidth:[labelFrame width] + 40];
-  [shapeFrame setHeight:[labelFrame height] + 30];
+  [shapeFrame setWidth:[labelFrame width] + ([labelFrame height] * 2.0) + 32];
+  [shapeFrame setHeight:[labelFrame height] + 20];
   [shapeFrame setMidX:[labelFrame midX]];
   [shapeFrame setMidY:[labelFrame midY]];
 
