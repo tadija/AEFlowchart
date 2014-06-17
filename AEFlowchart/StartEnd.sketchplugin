@@ -8,20 +8,33 @@ flowchart("StartEnd", startEndShape);
 /*  draw start-end rounded rectangle shape for given label  */
 function startEndShape(label)
 {
+  // create shape
   var parentGroup = [label parentGroup];
-  var labelFrame = [label frame];
-
-  // add shape
   var shape = [parentGroup addLayerOfType:"rectangle"];
-  var shapeFrame = [shape frame];
-  var shapeStyle = [shape style];
-  var firstObject = [[shape layers] firstObject];
 
   // set frame
+  var labelFrame = [label frame];
+  var shapeFrame = [shape frame];
   [shapeFrame setWidth:[labelFrame width] + 40];
   [shapeFrame setHeight:[labelFrame height] + 20];
   [shapeFrame setMidX:[labelFrame midX]];
   [shapeFrame setMidY:[labelFrame midY]];
+
+  // set style
+  var shapeStyle = [shape style];
+  var fills = [shapeStyle fills];
+  if([fills count] <= 0) [fills addNewStylePart];
+  var shapeFill = [shapeStyle fill];
+
+  // add gradient fill
+  [shapeFill setFillType: 1];
+  var gradient = [shapeFill gradient];
+  [gradient setColor: [MSColor colorWithHex:"FF5E3A" alpha:1] atIndex:0];
+  [gradient setColor: [MSColor colorWithHex:"FF2A68" alpha:1] atIndex:1];
+
+  // add default inner shadow
+  var innerShadows = [shapeStyle innerShadows];
+  if([innerShadows count] <= 0) [innerShadows addNewStylePart];
 
   // round corners (calculate pill radius)
   var radius;
@@ -30,21 +43,9 @@ function startEndShape(label)
   } else {
     radius = [shapeFrame width] / 2;
   }
+  var firstObject = [[shape layers] firstObject];
   [firstObject setFixedRadius:Math.round(radius)];
   [firstObject resetPointsBasedOnUserInteraction];
-
-  // set gradient fill
-  var fills = [shapeStyle fills];
-  if([fills count] <= 0) [fills addNewStylePart];
-  var shapeFill = [shapeStyle fill];
-  [shapeFill setFillType: 1];
-  var gradient = [shapeFill gradient];
-  [gradient setColor: [MSColor colorWithHex:"FF5E3A" alpha:1] atIndex: 0];
-  [gradient setColor: [MSColor colorWithHex:"FF2A68" alpha:1] atIndex: 1];
-
-  // add default inner shadow
-  var innerShadows = [shapeStyle innerShadows];
-  if([innerShadows count] <= 0) [innerShadows addNewStylePart];
 
   return shape;
 }

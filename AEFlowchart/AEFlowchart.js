@@ -34,11 +34,21 @@ function flowchart(elementName, drawShape)
 /*	style the label as defined in AELabelSettings.js	*/
 function setupLabel(label)
 {
+	// get current label position
+	var currentFrame = [label frame];
+	var currentMidX = [currentFrame midX];
+	var currentMidY = [currentFrame midY];
+
 	// label settings
-	[label setFontPostscriptName: labelFontName];
-	[label setFontSize: labelFontSize];
-	[label setTextColor: [MSColor colorWithHex:labelFontColor alpha:1]];
-	[label setTextAlignment: 2]; // center
+	[label setFontPostscriptName:labelFontName];
+	[label setFontSize:labelFontSize];
+	[label setTextColor:[MSColor colorWithHex:labelFontColor alpha:1]];
+	[label setTextAlignment:2]; // center
+
+	// restore label position
+	var newFrame = [label frame];
+	[newFrame setMidX:currentMidX];
+	[newFrame setMidY:currentMidY];
 
 	if (labelDropShadow) {
 		// add default shadow
@@ -54,17 +64,17 @@ function groupLabelAndShape(elementName, label, shape)
 
 	// create new group
 	var newGroup = [parentGroup addLayerOfType: "group"];
-	[newGroup setName: elementName + " - " + [label stringValue]];
+	[newGroup setName:elementName + " - " + [label stringValue]];
 
 	// add shape to new group
-	[shape setName: elementName + " Shape - " + [label stringValue]];
-	[newGroup addLayer: shape];
-	[parentGroup removeLayer: shape];
+	[shape setName:elementName + " Shape - " + [label stringValue]];
+	[newGroup addLayer:shape];
+	[parentGroup removeLayer:shape];
 
 	// add label to new group
-	[label setName: elementName + " Label - " + [label stringValue]];
-	[newGroup addLayer: label];
-	[parentGroup removeLayer: label];
+	[label setName:elementName + " Label - " + [label stringValue]];
+	[newGroup addLayer:label];
+	[parentGroup removeLayer:label];
 
 	// refresh group size
 	[newGroup resizeRoot];

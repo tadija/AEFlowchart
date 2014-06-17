@@ -8,38 +8,45 @@ flowchart("Decision", decisionShape);
 /*  draw decision diamond shape for given label  */
 function decisionShape(label)
 {
-  var parentGroup = [label parentGroup];
+  // get label size
   var labelFrame = [label frame];
+  var labelWidth = [labelFrame width];
+  var labelHeight = [labelFrame height];
 
-  // draw NSBezierPath
+  // set shape padding
+  var minPadding = 32.0;
+  var maxPadding = 64.0;
+  // horizontal
+  var shapeHorizontalPadding = labelWidth * 0.3;
+  if(shapeHorizontalPadding < minPadding) shapeHorizontalPadding = minPadding;
+  if(shapeHorizontalPadding > maxPadding) shapeHorizontalPadding = maxPadding;
+  // vertical
+  var shapeVerticalPadding = labelHeight * 1.3;
+  if(shapeVerticalPadding < minPadding) shapeVerticalPadding = minPadding;
+  if(shapeVerticalPadding > maxPadding) shapeVerticalPadding = maxPadding;
+
+  // create shape path
   var shapePath = [NSBezierPath bezierPath];
-  // set the starting point of the shape.
-  [shapePath moveToPoint:CGPointMake(100.0, 0.0)];
-  // draw the lines
-  [shapePath lineToPoint:CGPointMake(200.0, 40.0)];
-  [shapePath lineToPoint:CGPointMake(100.0, 80.0)];
-  [shapePath lineToPoint:CGPointMake(0.0, 40.0)];
+  [shapePath moveToPoint:CGPointMake([labelFrame midX], [labelFrame minY] - shapeVerticalPadding)];
+  [shapePath lineToPoint:CGPointMake([labelFrame maxX] + shapeHorizontalPadding, [labelFrame midY])];
+  [shapePath lineToPoint:CGPointMake([labelFrame midX], [labelFrame maxY] + shapeVerticalPadding)];
+  [shapePath lineToPoint:CGPointMake([labelFrame minX] - shapeHorizontalPadding, [labelFrame midY])];
   [shapePath closePath];
 
   // create BCBezierPath with NSBezierPath
   var bcPath = [[BCBezierPath alloc] init];
   [bcPath setPath: shapePath];
 
-  // create custom shape
+  // create shape
   var shape = [MSShapeGroup shapeWithBezierPath: bcPath];
-  var shapeFrame = [shape frame];
+
+  // set style
   var shapeStyle = [shape style];
-
-  // set frame
-  [shapeFrame setWidth:[labelFrame width] + ([labelFrame height] * 2.0) + 32];
-  [shapeFrame setHeight:[shapeFrame width] / 2];
-  [shapeFrame setMidX:[labelFrame midX]];
-  [shapeFrame setMidY:[labelFrame midY]];
-
-  // set gradient fill
   var fills = [shapeStyle fills];
   if([fills count] <= 0) [fills addNewStylePart];
   var shapeFill = [shapeStyle fill];
+
+  // add gradient fill
   [shapeFill setFillType: 1];
   var gradient = [shapeFill gradient];
   [gradient setColor: [MSColor colorWithHex:"C644FC" alpha:1] atIndex:0];

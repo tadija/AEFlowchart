@@ -8,28 +8,29 @@ flowchart("Process", processShape);
 /*  draw process rectangle shape for given label  */
 function processShape(label)
 {
+  // create shape
   var parentGroup = [label parentGroup];
-  var labelFrame = [label frame];
-
-  // add shape
   var shape = [parentGroup addLayerOfType:"rectangle"];
-  var shapeFrame = [shape frame];
-  var shapeStyle = [shape style];
 
   // set frame
+  var labelFrame = [label frame];
+  var shapeFrame = [shape frame];
   [shapeFrame setWidth:[labelFrame width] + 40];
   [shapeFrame setHeight:[labelFrame height] + 30];
   [shapeFrame setMidX:[labelFrame midX]];
   [shapeFrame setMidY:[labelFrame midY]];
 
-  // set gradient fill
+  // set style
+  var shapeStyle = [shape style];
   var fills = [shapeStyle fills];
   if([fills count] <= 0) [fills addNewStylePart];
   var shapeFill = [shapeStyle fill];
+
+  // add gradient fill
   [shapeFill setFillType: 1];
   var gradient = [shapeFill gradient];
-  [gradient setColor: [MSColor colorWithHex:"1AD6FD" alpha:1] atIndex: 0];
-  [gradient setColor: [MSColor colorWithHex:"1D62F0" alpha:1] atIndex: 1];
+  [gradient setColor: [MSColor colorWithHex:"1AD6FD" alpha:1] atIndex:0];
+  [gradient setColor: [MSColor colorWithHex:"1D62F0" alpha:1] atIndex:1];
 
   // add default inner shadow
   var innerShadows = [shapeStyle innerShadows];
