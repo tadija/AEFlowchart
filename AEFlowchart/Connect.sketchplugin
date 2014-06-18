@@ -23,12 +23,6 @@ function drawAllConnections(selection)
       drawOneConnection(twoSteps);
     }
   }
-
-  // refresh connectionsGroup
-  var firstObject = selection[0];
-  var artboardGroup = [firstObject parentArtboard];
-  var connectionsGroup = getConnectionsGroup(artboardGroup);
-  [connectionsGroup resizeRoot];
 }
 
 function drawOneConnection(twoSteps)
@@ -37,15 +31,22 @@ function drawOneConnection(twoSteps)
   var firstStep = twoSteps[0];
   var secondStep = twoSteps[1];
 
-  // get frames
+  // get connectionsGroup position
+  var artboardGroup = [firstStep parentArtboard];
+  var connectionsGroup = getConnectionsGroup(artboardGroup);
+  var connectionsGroupFrame = [connectionsGroup frame];
+  var connectionsGroupX = [connectionsGroupFrame x];
+  var connectionsGroupY = [connectionsGroupFrame y];
+
+  // get frames of steps
   var firstStepFrame = [firstStep frame];
   var secondStepFrame = [secondStep frame];
 
-  // get points
-  var firstStepBottom = [firstStepFrame maxY];
-  var firstStepMiddle = [firstStepFrame midX];
-  var secondStepTop = [secondStepFrame minY];
-  var secondStepMiddle = [secondStepFrame midX];
+  // get points (always reset to origin of the artboard by substracting connectionsGroup position)
+  var firstStepBottom = [firstStepFrame maxY] - connectionsGroupY;
+  var firstStepMiddle = [firstStepFrame midX] - connectionsGroupX;
+  var secondStepTop = [secondStepFrame minY] - connectionsGroupY;
+  var secondStepMiddle = [secondStepFrame midX] - connectionsGroupX;
   var spacingHalf = (secondStepTop - firstStepBottom) / 2;
   var middleDifference = firstStepMiddle - secondStepMiddle;
 
@@ -70,32 +71,31 @@ function drawOneConnection(twoSteps)
     // create vector line
     var lineShape = [[MSShapeGroup alloc] init];
     [lineShape setBezierPath: linePath];
+    [lineShape setName:[firstStep name] + " -> " + [secondStep name]];
 
     // add border
     var lineShapeStyle = [lineShape style];
     var borders = [lineShapeStyle borders];
     if([borders count] <= 0) [borders addNewStylePart];
 
-    // add line to connectionsGroup
-    var artboardGroup = [firstStep parentArtboard];
-    var connectionsGroup = getConnectionsGroup(artboardGroup);
-    [lineShape setName:[firstStep name] + " -> " + [secondStep name]];
+    // add line shape to connectionsGroup
     [connectionsGroup addLayer:lineShape];
-
-    // deselect steps
-    [firstStep setIsSelected:false];
-    [secondStep setIsSelected:false];
   }
+
+  // deselect steps
+  [firstStep setIsSelected:false];
+  [secondStep setIsSelected:false];
 }
 
 function getConnectionsGroup(artboardGroup)
 {
   var connectionsGroup = [artboardGroup layerWithId:"AEConnections"];
 
-  // create if not exists
+  // create group if not exists
   if (connectionsGroup === null) {
     connectionsGroup = [artboardGroup addLayerOfType:"group"];
     [connectionsGroup setName:"AEConnections"];
+    [connectionsGroup setIsLocked:true];
   }
 
   return connectionsGroup;
