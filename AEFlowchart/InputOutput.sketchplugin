@@ -47,8 +47,8 @@ function inputOutputShape(label)
   // add gradient fill
   [shapeFill setFillType: 1];
   var gradient = [shapeFill gradient];
-  [gradient setColor: [MSColor colorWithHex:"B4EC51" alpha:1] atIndex: 0];
-  [gradient setColor: [MSColor colorWithHex:"429321" alpha:1] atIndex: 1];
+  [gradient setColor:[MSColor colorWithHex:"B4EC51" alpha:1] atIndex:0];
+  [gradient setColor:[MSColor colorWithHex:"429321" alpha:1] atIndex:1];
 
   // add default inner shadow
   var innerShadows = [shapeStyle innerShadows];

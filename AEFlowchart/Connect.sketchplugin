@@ -77,6 +77,8 @@ function drawOneConnection(twoSteps)
     var lineShapeStyle = [lineShape style];
     var borders = [lineShapeStyle borders];
     if([borders count] <= 0) [borders addNewStylePart];
+    var border = [lineShapeStyle border];
+    [border setColor:[MSColor colorWithHex:"DBDDDE" alpha:1]];
 
     // add line shape to connectionsGroup
     [connectionsGroup addLayer:lineShape];

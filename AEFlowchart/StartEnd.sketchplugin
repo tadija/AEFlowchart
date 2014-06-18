@@ -29,8 +29,8 @@ function startEndShape(label)
   // add gradient fill
   [shapeFill setFillType: 1];
   var gradient = [shapeFill gradient];
-  [gradient setColor: [MSColor colorWithHex:"FF5B37" alpha:1] atIndex:0];
-  [gradient setColor: [MSColor colorWithHex:"FB2B69" alpha:1] atIndex:1];
+  [gradient setColor:[MSColor colorWithHex:"FF5B37" alpha:1] atIndex:0];
+  [gradient setColor:[MSColor colorWithHex:"FB2B69" alpha:1] atIndex:1];
 
   // add default inner shadow
   var innerShadows = [shapeStyle innerShadows];

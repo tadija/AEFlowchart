@@ -29,8 +29,8 @@ function processShape(label)
   // add gradient fill
   [shapeFill setFillType: 1];
   var gradient = [shapeFill gradient];
-  [gradient setColor: [MSColor colorWithHex:"1AD6FD" alpha:1] atIndex:0];
-  [gradient setColor: [MSColor colorWithHex:"1D62F0" alpha:1] atIndex:1];
+  [gradient setColor:[MSColor colorWithHex:"1AD6FD" alpha:1] atIndex:0];
+  [gradient setColor:[MSColor colorWithHex:"1D62F0" alpha:1] atIndex:1];
 
   // add default inner shadow
   var innerShadows = [shapeStyle innerShadows];
