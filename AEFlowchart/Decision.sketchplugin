@@ -3,7 +3,7 @@
 #import 'AEFlowchart.js'
 
 /*  call AEFlowchart main function with custom name and shape function  */
-flowchart("Decision", decisionShape);
+createStep("Decision", decisionShape);
 
 /*  draw decision diamond shape for given label  */
 function decisionShape(label)

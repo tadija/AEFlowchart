@@ -3,7 +3,7 @@
 #import 'AEFlowchart.js'
 
 /*  call AEFlowchart main function with custom name and shape function  */
-flowchart("Process", processShape);
+createStep("Process", processShape);
 
 /*  draw process rectangle shape for given label  */
 function processShape(label)

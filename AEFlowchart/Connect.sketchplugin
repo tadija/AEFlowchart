@@ -1,0 +1,102 @@
+// Connect (ctrl shift c)
+
+#import 'AEFlowchart.js'
+
+/*  call AEFlowchart main function with custom name and lineShape function  */
+connectSteps(drawAllConnections);
+
+function drawAllConnections(selection)
+{
+  // sort selection from top to bottom steps
+  var sortedSelection = [];
+  var loop = [selection objectEnumerator];
+  while (item = [loop nextObject]) {
+    sortedSelection.push(item);
+  }
+  sortedSelection = sortedSelection.sort(function(a,b){return [[a frame] top] - [[b frame] top]});
+
+  // draw connection between every two steps
+  for (var i = 0; i < sortedSelection.length; i++) {
+    // skip last step (there is no step after to connect)
+    if ((i + 1) < sortedSelection.length) {
+      var twoSteps = [sortedSelection[i], sortedSelection[i + 1]];
+      drawOneConnection(twoSteps);
+    }
+  }
+
+  // refresh connectionsGroup
+  var firstObject = selection[0];
+  var artboardGroup = [firstObject parentArtboard];
+  var connectionsGroup = getConnectionsGroup(artboardGroup);
+  [connectionsGroup resizeRoot];
+}
+
+function drawOneConnection(twoSteps)
+{
+  // get steps to connect
+  var firstStep = twoSteps[0];
+  var secondStep = twoSteps[1];
+
+  // get frames
+  var firstStepFrame = [firstStep frame];
+  var secondStepFrame = [secondStep frame];
+
+  // get points
+  var firstStepBottom = [firstStepFrame maxY];
+  var firstStepMiddle = [firstStepFrame midX];
+  var secondStepTop = [secondStepFrame minY];
+  var secondStepMiddle = [secondStepFrame midX];
+  var spacingHalf = (secondStepTop - firstStepBottom) / 2;
+  var middleDifference = firstStepMiddle - secondStepMiddle;
+
+  // draw only if second step is below the first one
+  if (firstStepBottom < secondStepTop) {
+    // create NSBezierPath
+    var lineBezierPath = [NSBezierPath bezierPath];
+    [lineBezierPath moveToPoint:CGPointMake(firstStepMiddle, firstStepBottom)];
+    // tolerate some pixels in middleDifference
+    if (Math.abs(middleDifference) > 2.0) {
+      [lineBezierPath lineToPoint:CGPointMake(firstStepMiddle, firstStepBottom + spacingHalf)];
+      [lineBezierPath lineToPoint:CGPointMake(secondStepMiddle, firstStepBottom + spacingHalf)];
+      [lineBezierPath lineToPoint:CGPointMake(secondStepMiddle, secondStepTop)];
+    } else {
+      [lineBezierPath lineToPoint:CGPointMake(firstStepMiddle, secondStepTop)];
+    }
+
+    // create BCBezierPath with NSBezierPath
+    var linePath = [[BCBezierPath alloc] init];
+    [linePath setPath:lineBezierPath];
+
+    // create vector line
+    var lineShape = [[MSShapeGroup alloc] init];
+    [lineShape setBezierPath: linePath];
+
+    // add border
+    var lineShapeStyle = [lineShape style];
+    var borders = [lineShapeStyle borders];
+    if([borders count] <= 0) [borders addNewStylePart];
+
+    // add line to connectionsGroup
+    var artboardGroup = [firstStep parentArtboard];
+    var connectionsGroup = getConnectionsGroup(artboardGroup);
+    [lineShape setName:[firstStep name] + " -> " + [secondStep name]];
+    [connectionsGroup addLayer:lineShape];
+
+    // deselect steps
+    [firstStep setIsSelected:false];
+    [secondStep setIsSelected:false];
+  }
+}
+
+function getConnectionsGroup(artboardGroup)
+{
+  var connectionsGroup = [artboardGroup layerWithId:"AEConnections"];
+
+  // create if not exists
+  if (connectionsGroup === null) {
+    connectionsGroup = [artboardGroup addLayerOfType:"group"];
+    [connectionsGroup setName:"AEConnections"];
+  }
+
+  return connectionsGroup;
+}

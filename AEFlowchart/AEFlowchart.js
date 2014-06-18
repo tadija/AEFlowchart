@@ -5,23 +5,22 @@
 /*	this is the method which should be called from AEFlowchart plugins
 		- elementName should be string which will be used for items naming
 		- drawShape should be method which returns some shape for the given label	*/
-function flowchart(elementName, drawShape)
+function createStep(stepName, drawShape)
 {
 	if([selection count] == 0) {
-		// nothing is selected
 		[doc showMessage:"Oops, you have to select some text layer"];
 	}
 	else {
 		// iterate selected items
-		var loop = [selection objectEnumerator]
-		while (item = [loop nextObject]) {
+		var loop = [selection objectEnumerator];
+		while (label = [loop nextObject]) {
 
 			// create flowchart shapes from text
-			if ([item class] === MSTextLayer) {
+			if ([label class] === MSTextLayer) {
 
-				setupLabel(item);
-				var shape = drawShape(item);
-				groupLabelAndShape(elementName, item, shape);
+				styleStepTitle(label);
+				var shape = drawShape(label);
+				groupStepLayers(stepName, label, shape);
 
 			}
 			else {
@@ -31,8 +30,18 @@ function flowchart(elementName, drawShape)
 	}
 }
 
+/*	draw connection lines between selected objects (from top to bottom)	*/
+function connectSteps(drawConnections)
+{
+	if([selection count] < 2) {
+		[doc showMessage:"Oops, you have to select at least two layers"];
+	} else {
+		drawConnections(selection);
+	}
+}
+
 /*	style the label as defined in AELabelSettings.js	*/
-function setupLabel(label)
+function styleStepTitle(label)
 {
 	// get current label position
 	var currentFrame = [label frame];
@@ -58,23 +67,26 @@ function setupLabel(label)
 }
 
 /*	group and name the label and shape layers	*/
-function groupLabelAndShape(elementName, label, shape)
+function groupStepLayers(stepName, label, shape)
 {
 	var parentGroup = [label parentGroup];
 
 	// create new group
-	var newGroup = [parentGroup addLayerOfType: "group"];
-	[newGroup setName:elementName + " - " + [label stringValue]];
+	var newGroup = [parentGroup addLayerOfType:"group"];
+	[newGroup setName:stepName + " - " + [label stringValue]];
 
 	// add shape to new group
-	[shape setName:elementName + " Shape - " + [label stringValue]];
+	[shape setName:stepName + " Shape - " + [label stringValue]];
 	[newGroup addLayer:shape];
 	[parentGroup removeLayer:shape];
 
 	// add label to new group
-	[label setName:elementName + " Label - " + [label stringValue]];
+	[label setName:stepName + " Label - " + [label stringValue]];
 	[newGroup addLayer:label];
 	[parentGroup removeLayer:label];
+
+	// deselect label
+	[label setIsSelected:false];
 
 	// refresh group size
 	[newGroup resizeRoot];

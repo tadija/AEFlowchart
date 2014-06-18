@@ -3,7 +3,7 @@
 #import 'AEFlowchart.js'
 
 /*  call AEFlowchart main function with custom name and shape function  */
-flowchart("InputOutput", inputOutputShape);
+createStep("InputOutput", inputOutputShape);
 
 /*  draw input-output parallelogram shape for given label  */
 function inputOutputShape(label)
@@ -21,7 +21,7 @@ function inputOutputShape(label)
   if(shapeHorizontalPadding < minPadding) shapeHorizontalPadding = minPadding;
   if(shapeHorizontalPadding > maxPadding) shapeHorizontalPadding = maxPadding;
   // vertical
-  var shapeVerticalPadding = 10.0;
+  var shapeVerticalPadding = 12.0;
 
   // create shape path
   var shapePath = [NSBezierPath bezierPath];
@@ -47,8 +47,8 @@ function inputOutputShape(label)
   // add gradient fill
   [shapeFill setFillType: 1];
   var gradient = [shapeFill gradient];
-  [gradient setColor: [MSColor colorWithHex:"87FC70" alpha:1] atIndex: 0];
-  [gradient setColor: [MSColor colorWithHex:"0BD318" alpha:1] atIndex: 1];
+  [gradient setColor: [MSColor colorWithHex:"B4EC51" alpha:1] atIndex: 0];
+  [gradient setColor: [MSColor colorWithHex:"429321" alpha:1] atIndex: 1];
 
   // add default inner shadow
   var innerShadows = [shapeStyle innerShadows];
