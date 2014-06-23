@@ -13,7 +13,7 @@ function drawAllConnections(selection)
   while (item = [loop nextObject]) {
     sortedSelection.push(item);
   }
-  sortedSelection = sortedSelection.sort(function(a,b){return [[a frame] top] - [[b frame] top]});
+  sortedSelection = sortedSelection.sort(sortByPosition);
 
   // draw connection between every two steps
   for (var i = 0; i < sortedSelection.length; i++) {
@@ -44,49 +44,82 @@ function drawOneConnection(twoSteps)
 
   // get points (always reset to origin of the artboard by substracting connectionsGroup position)
   var firstStepBottom = [firstStepFrame maxY] - connectionsGroupY;
-  var firstStepMiddle = [firstStepFrame midX] - connectionsGroupX;
+  var firstStepRight = [firstStepFrame maxX] - connectionsGroupX;
+  var firstStepHorizontalMiddle = [firstStepFrame midX] - connectionsGroupX;
+  var firstStepVerticalMiddle = [firstStepFrame midY] - connectionsGroupY;
   var secondStepTop = [secondStepFrame minY] - connectionsGroupY;
-  var secondStepMiddle = [secondStepFrame midX] - connectionsGroupX;
-  var spacingHalf = (secondStepTop - firstStepBottom) / 2;
-  var middleDifference = firstStepMiddle - secondStepMiddle;
+  var secondStepLeft = [secondStepFrame minX] - connectionsGroupX;
+  var secondStepHorizontalMiddle = [secondStepFrame midX] - connectionsGroupX;
+  var secondStepVerticalMiddle = [secondStepFrame midY] - connectionsGroupY;
+  var horizontalSpacingHalf = (secondStepLeft - firstStepRight) / 2;
+  var verticalSpacingHalf = (secondStepTop - firstStepBottom) / 2;
+  var horizontalMiddleDifference = firstStepHorizontalMiddle - secondStepHorizontalMiddle;
+  var verticalMiddleDifference = firstStepVerticalMiddle - secondStepVerticalMiddle;
 
-  // draw only if second step is below the first one
+  // create NSBezierPath
+  var lineBezierPath = [NSBezierPath bezierPath];
+
   if (firstStepBottom < secondStepTop) {
-    // create NSBezierPath
-    var lineBezierPath = [NSBezierPath bezierPath];
-    [lineBezierPath moveToPoint:CGPointMake(firstStepMiddle, firstStepBottom)];
-    // tolerate some pixels in middleDifference
-    if (Math.abs(middleDifference) > 2.0) {
-      [lineBezierPath lineToPoint:CGPointMake(firstStepMiddle, firstStepBottom + spacingHalf)];
-      [lineBezierPath lineToPoint:CGPointMake(secondStepMiddle, firstStepBottom + spacingHalf)];
-      [lineBezierPath lineToPoint:CGPointMake(secondStepMiddle, secondStepTop)];
+    // draw vertical connection
+    [lineBezierPath moveToPoint:CGPointMake(firstStepHorizontalMiddle, firstStepBottom)];
+    // tolerate some pixels in horizontalMiddleDifference
+    if (Math.abs(horizontalMiddleDifference) > 2.0) {
+      [lineBezierPath lineToPoint:CGPointMake(firstStepHorizontalMiddle, firstStepBottom + verticalSpacingHalf)];
+      [lineBezierPath lineToPoint:CGPointMake(secondStepHorizontalMiddle, firstStepBottom + verticalSpacingHalf)];
+      [lineBezierPath lineToPoint:CGPointMake(secondStepHorizontalMiddle, secondStepTop)];
     } else {
-      [lineBezierPath lineToPoint:CGPointMake(firstStepMiddle, secondStepTop)];
+      [lineBezierPath lineToPoint:CGPointMake(firstStepHorizontalMiddle, secondStepTop)];
     }
-
-    // create BCBezierPath with NSBezierPath
-    var linePath = [[BCBezierPath alloc] init];
-    [linePath setPath:lineBezierPath];
-
-    // create vector line
-    var lineShape = [[MSShapeGroup alloc] init];
-    [lineShape setBezierPath: linePath];
-    [lineShape setName:[firstStep name] + " -> " + [secondStep name]];
-
-    // add border
-    var lineShapeStyle = [lineShape style];
-    var borders = [lineShapeStyle borders];
-    if([borders count] <= 0) [borders addNewStylePart];
-    var border = [lineShapeStyle border];
-    [border setColor:[MSColor colorWithHex:"DBDDDE" alpha:1]];
-
-    // add line shape to connectionsGroup
-    [connectionsGroup addLayer:lineShape];
+  } else {
+    // draw horizontal connection
+    [lineBezierPath moveToPoint:CGPointMake(firstStepRight, firstStepVerticalMiddle)];
+    // tolerate some pixels in verticalMiddleDifference
+    if (Math.abs(verticalMiddleDifference) > 2.0) {
+      [lineBezierPath lineToPoint:CGPointMake(firstStepRight + horizontalSpacingHalf, firstStepVerticalMiddle)];
+      [lineBezierPath lineToPoint:CGPointMake(firstStepRight + horizontalSpacingHalf, secondStepVerticalMiddle)];
+      [lineBezierPath lineToPoint:CGPointMake(secondStepLeft, secondStepVerticalMiddle)];
+    } else {
+      [lineBezierPath lineToPoint:CGPointMake(secondStepLeft, firstStepVerticalMiddle)];
+    }
   }
+
+  // create BCBezierPath with NSBezierPath
+  var linePath = [[BCBezierPath alloc] init];
+  [linePath setPath:lineBezierPath];
+
+  // create vector line
+  var lineShape = [[MSShapeGroup alloc] init];
+  [lineShape setBezierPath: linePath];
+  [lineShape setName:[firstStep name] + " -> " + [secondStep name]];
+
+  // add border
+  var lineShapeStyle = [lineShape style];
+  var borders = [lineShapeStyle borders];
+  if([borders count] <= 0) [borders addNewStylePart];
+  var border = [lineShapeStyle border];
+  [border setColor:[MSColor colorWithHex:"DBDDDE" alpha:1]];
+
+  // add line shape to connectionsGroup
+  [connectionsGroup addLayer:lineShape];
 
   // deselect steps
   [firstStep setIsSelected:false];
   [secondStep setIsSelected:false];
+}
+
+function sortByPosition(a,b)
+{
+  var sortOrder;
+
+  if ([[a frame] maxY] < [[b frame] minY] || [[b frame] maxY] < [[a frame] minY]) {
+    // sort from top to bottom
+    sortOrder = [[a frame] top] - [[b frame] top];
+  } else {
+    // sort from left to right
+    sortOrder = [[a frame] left] - [[b frame] left];
+  }
+
+  return sortOrder;
 }
 
 function getConnectionsGroup(artboardGroup)
