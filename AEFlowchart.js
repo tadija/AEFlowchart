@@ -1,4 +1,6 @@
-// Main Flowchart Library
+// Sketch Plugin: AEFlowchart (main library)
+// Source: github.com/tadija/AEFlowchart
+// Version: 1.0
 
 #import 'AELabelSettings.js'
 

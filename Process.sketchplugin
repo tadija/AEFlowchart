@@ -1,4 +1,6 @@
-// Process (ctrl shift p)
+// Sketch Plugin: AEFlowchart - Process (ctrl shift p)
+// Source: github.com/tadija/AEFlowchart
+// Version: 1.0
 
 #import 'AEFlowchart.js'
 

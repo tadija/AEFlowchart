@@ -1,4 +1,6 @@
-// Decision (ctrl shift d)
+// Sketch Plugin: AEFlowchart - Decision (ctrl shift d)
+// Source: github.com/tadija/AEFlowchart
+// Version: 1.0
 
 #import 'AEFlowchart.js'
 

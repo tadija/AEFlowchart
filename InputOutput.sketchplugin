@@ -1,4 +1,6 @@
-// InputOutput (ctrl shift i)
+// Sketch Plugin: AEFlowchart - InputOutput (ctrl shift o)
+// Source: github.com/tadija/AEFlowchart
+// Version: 1.0
 
 #import 'AEFlowchart.js'
 

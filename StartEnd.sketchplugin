@@ -1,4 +1,6 @@
-// StartEnd (ctrl shift s)
+// Sketch Plugin: AEFlowchart - StartEnd (ctrl shift s)
+// Source: github.com/tadija/AEFlowchart
+// Version: 1.0
 
 #import 'AEFlowchart.js'
 
