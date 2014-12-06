@@ -12,7 +12,9 @@ function processShape(label)
 {
   // create shape
   var parentGroup = [label parentGroup];
-  var shape = [parentGroup addLayerOfType:"rectangle"];
+  var shape = [[MSRectangleShape alloc] init];
+  var shapeGroup = shape.embedInShapeGroup();
+  [parentGroup addLayers:[shapeGroup]];
 
   // set frame
   var labelFrame = [label frame];
@@ -21,9 +23,10 @@ function processShape(label)
   [shapeFrame setHeight:[labelFrame height] + 30];
   [shapeFrame setMidX:[labelFrame midX]];
   [shapeFrame setMidY:[labelFrame midY]];
+  [shapeGroup setFrame: shapeFrame];
 
   // set style
-  var shapeStyle = [shape style];
+  var shapeStyle = [shapeGroup style];
   var fills = [shapeStyle fills];
   if([fills count] <= 0) [fills addNewStylePart];
   var shapeFill = [shapeStyle fill];
@@ -31,12 +34,12 @@ function processShape(label)
   // add gradient fill
   [shapeFill setFillType: 1];
   var gradient = [shapeFill gradient];
-  [gradient setColor:[MSColor colorWithHex:"1AD6FD" alpha:1] atIndex:0];
-  [gradient setColor:[MSColor colorWithHex:"1D62F0" alpha:1] atIndex:1];
+  [gradient setColor:[MSColor colorWithSVGString:"#1AD6FD"] atIndex:0];
+  [gradient setColor:[MSColor colorWithSVGString:"#1D62F0"] atIndex:1];
 
   // add default inner shadow
   var innerShadows = [shapeStyle innerShadows];
   if([innerShadows count] <= 0) [innerShadows addNewStylePart];
 
-  return shape;
+  return shapeGroup;
 }

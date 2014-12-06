@@ -33,12 +33,8 @@ function inputOutputShape(label)
   [shapePath lineToPoint:CGPointMake([labelFrame minX] - shapeHorizontalPadding, [labelFrame maxY] + shapeVerticalPadding))];
   [shapePath closePath];
 
-  // create BCBezierPath with NSBezierPath
-  var bcPath = [[BCBezierPath alloc] init];
-  [bcPath setPath: shapePath];
-
   // create shape
-  var shape = [MSShapeGroup shapeWithBezierPath: bcPath];
+  var shape = [MSShapeGroup shapeWithBezierPath: shapePath];
 
   // set style
   var shapeStyle = [shape style];
@@ -49,8 +45,8 @@ function inputOutputShape(label)
   // add gradient fill
   [shapeFill setFillType: 1];
   var gradient = [shapeFill gradient];
-  [gradient setColor:[MSColor colorWithHex:"B4EC51" alpha:1] atIndex:0];
-  [gradient setColor:[MSColor colorWithHex:"429321" alpha:1] atIndex:1];
+  [gradient setColor:[MSColor colorWithSVGString:"#B4EC51"] atIndex:0];
+  [gradient setColor:[MSColor colorWithSVGString:"#429321"] atIndex:1];
 
   // add default inner shadow
   var innerShadows = [shapeStyle innerShadows];

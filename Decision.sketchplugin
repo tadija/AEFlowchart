@@ -35,12 +35,8 @@ function decisionShape(label)
   [shapePath lineToPoint:CGPointMake([labelFrame minX] - shapeHorizontalPadding, [labelFrame midY])];
   [shapePath closePath];
 
-  // create BCBezierPath with NSBezierPath
-  var bcPath = [[BCBezierPath alloc] init];
-  [bcPath setPath: shapePath];
-
   // create shape
-  var shape = [MSShapeGroup shapeWithBezierPath: bcPath];
+  var shape = [MSShapeGroup shapeWithBezierPath: shapePath];
 
   // set style
   var shapeStyle = [shape style];
@@ -51,8 +47,8 @@ function decisionShape(label)
   // add gradient fill
   [shapeFill setFillType: 1];
   var gradient = [shapeFill gradient];
-  [gradient setColor:[MSColor colorWithHex:"C644FC" alpha:1] atIndex:0];
-  [gradient setColor:[MSColor colorWithHex:"5856D6" alpha:1] atIndex:1];
+  [gradient setColor:[MSColor colorWithSVGString:"#C644FC"] atIndex:0];
+  [gradient setColor:[MSColor colorWithSVGString:"#5856D6"] atIndex:1];
 
   // add default inner shadow
   var innerShadows = [shapeStyle innerShadows];

@@ -53,7 +53,7 @@ function styleStepTitle(label)
 	// label settings
 	[label setFontPostscriptName:labelFontName];
 	[label setFontSize:labelFontSize];
-	[label setTextColor:[MSColor colorWithHex:labelFontColor alpha:1]];
+	[label setTextColor:[MSColor colorWithSVGString:labelFontColor]];
 	[label setTextAlignment:2]; // center
 
 	// restore label position
@@ -79,17 +79,17 @@ function groupStepLayers(stepName, label, shape)
 
 	// add shape to new group
 	[shape setName:stepName + " Shape - " + [label stringValue]];
-	[newGroup addLayer:shape];
+	[newGroup addLayers:[shape]];
 	[parentGroup removeLayer:shape];
 
 	// add label to new group
 	[label setName:stepName + " Label - " + [label stringValue]];
-	[newGroup addLayer:label];
+	[newGroup addLayers:[label]];
 	[parentGroup removeLayer:label];
 
 	// deselect label
 	[label setIsSelected:false];
 
 	// refresh group size
-	[newGroup resizeRoot];
+	[newGroup resizeRoot:0];
 }

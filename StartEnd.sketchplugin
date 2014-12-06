@@ -12,7 +12,9 @@ function startEndShape(label)
 {
   // create shape
   var parentGroup = [label parentGroup];
-  var shape = [parentGroup addLayerOfType:"rectangle"];
+  var shape = [[MSRectangleShape alloc] init];
+  var shapeGroup = shape.embedInShapeGroup();
+  [parentGroup addLayers:[shapeGroup]];
 
   // set frame
   var labelFrame = [label frame];
@@ -21,9 +23,10 @@ function startEndShape(label)
   [shapeFrame setHeight:[labelFrame height] + 20];
   [shapeFrame setMidX:[labelFrame midX]];
   [shapeFrame setMidY:[labelFrame midY]];
+  [shapeGroup setFrame: shapeFrame];
 
   // set style
-  var shapeStyle = [shape style];
+  var shapeStyle = [shapeGroup style];
   var fills = [shapeStyle fills];
   if([fills count] <= 0) [fills addNewStylePart];
   var shapeFill = [shapeStyle fill];
@@ -31,8 +34,8 @@ function startEndShape(label)
   // add gradient fill
   [shapeFill setFillType: 1];
   var gradient = [shapeFill gradient];
-  [gradient setColor:[MSColor colorWithHex:"FF5B37" alpha:1] atIndex:0];
-  [gradient setColor:[MSColor colorWithHex:"FB2B69" alpha:1] atIndex:1];
+  [gradient setColor:[MSColor colorWithSVGString:"#FF5B37"] atIndex:0];
+  [gradient setColor:[MSColor colorWithSVGString:"#FB2B69"] atIndex:1];
 
   // add default inner shadow
   var innerShadows = [shapeStyle innerShadows];
@@ -45,9 +48,8 @@ function startEndShape(label)
   } else {
     radius = [shapeFrame width] / 2;
   }
-  var firstObject = [[shape layers] firstObject];
-  [firstObject setFixedRadius:Math.round(radius)];
-  [firstObject resetPointsBasedOnUserInteraction];
+  var firstObject = [[shapeGroup layers] firstObject];
+  [firstObject setCornerRadiusFloat:Math.round(radius)];
 
-  return shape;
+  return shapeGroup;
 }
