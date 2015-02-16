@@ -34,8 +34,8 @@ function drawOneConnection(twoSteps)
   var secondStep = twoSteps[1];
 
   // get connectionsGroup position
-  var artboardGroup = [firstStep parentGroup];
-  var connectionsGroup = getConnectionsGroup(artboardGroup);
+  var parentGroup = [firstStep parentGroup];
+  var connectionsGroup = getConnectionsGroup(parentGroup);
   var connectionsGroupFrame = [connectionsGroup frame];
   var connectionsGroupX = [connectionsGroupFrame x];
   var connectionsGroupY = [connectionsGroupFrame y];
@@ -120,13 +120,13 @@ function sortByPosition(a,b)
   return sortOrder;
 }
 
-function getConnectionsGroup(artboardGroup)
+function getConnectionsGroup(parentGroup)
 {
-  var connectionsGroup = [artboardGroup layerWithId:"AEConnections"];
+  var connectionsGroup = [parentGroup layerWithId:"AEConnections"];
 
   // create group if not exists
   if (connectionsGroup === null) {
-    connectionsGroup = [artboardGroup addLayerOfType:"group"];
+    connectionsGroup = [parentGroup addLayerOfType:"group"];
     [connectionsGroup setName:"AEConnections"];
     [connectionsGroup setIsLocked:true];
   }
