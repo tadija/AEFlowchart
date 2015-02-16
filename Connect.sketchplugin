@@ -34,7 +34,7 @@ function drawOneConnection(twoSteps)
   var secondStep = twoSteps[1];
 
   // get connectionsGroup position
-  var artboardGroup = [firstStep parentArtboard];
+  var artboardGroup = [firstStep parentGroup];
   var connectionsGroup = getConnectionsGroup(artboardGroup);
   var connectionsGroupFrame = [connectionsGroup frame];
   var connectionsGroupX = [connectionsGroupFrame x];
