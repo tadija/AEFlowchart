@@ -2,7 +2,7 @@
 // Source: github.com/tadija/AEFlowchart
 // Version: 1.0
 
-#import 'AELabelSettings.js'
+@import 'AELabelSettings.js'
 
 /*	this is the method which should be called from AEFlowchart plugins
 		- elementName should be string which will be used for items naming
