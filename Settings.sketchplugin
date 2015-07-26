@@ -1,0 +1,258 @@
+// Sketch Plugin: AEFlowchart - Settings
+// Source: github.com/tadija/AEFlowchart
+// Version: 1.1
+
+@import 'Settings.js'
+
+var fontNameField;
+var fontSizeField;
+var fontColorField;
+var fontShadowCheckbox;
+var startEndColorFields;
+var processColorFields;
+var decisionColorFields;
+var inputOutputColorFields;
+
+var Layout = {
+  normalFont: [NSFont systemFontOfSize:12.0],
+  boldFont: [NSFont boldSystemFontOfSize:14.0],
+  fontColor: [NSColor darkGrayColor],
+
+  defaultLabelWidth: 60.0,
+  defaultLabelHeight: 20.0,
+  defaultFontColorFieldWidth: 75.0,
+  defaultSpacingFix: 2.0,
+
+  boxMargin: 16.0,
+
+  fontBoxSpacerFrame: NSMakeRect(0.0, 110.0, 320.0, 20.0),
+  fontBoxY: 370.0,
+  fontBoxElementSpacing: 30.0,
+  fontNameFieldWidth: 200.0,
+  fontSizeFieldWidth: 40.0,
+
+  checkboxSize: 20.0,
+
+  colorBoxSpacerFrame: NSMakeRect(0.0, 40.0, 200.0, 24.0),
+  colorBoxLabelY: 30.0,
+
+  shapeBoxSpacerFrame: NSMakeRect(0.0, 280.0, 200.0, 45.0),
+  shapeBoxElementSpacing: 70.0,
+
+  mainBoxSpacerFrame: NSMakeRect(0.0, 530.0, 300.0, 20.0)
+};
+
+function createLabel(text, font, color, frame) {
+  var label = [[NSTextField alloc] initWithFrame:frame];
+  [label setStringValue:text];
+  [label setFont:font];
+  [label setTextColor:color];
+  [label setBezeled:false];
+  [label setDrawsBackground:false];
+  [label setEditable:false];
+  [label setSelectable:false];
+  return label;
+}
+
+function createTextFieldAfterLabel(label, value, width) {
+  var labelFrame = [label frame];
+  var labelY = labelFrame.origin.y;
+  var labelMaxX = CGRectGetMaxX(labelFrame);
+
+  var textField = [[NSTextField alloc] initWithFrame:NSMakeRect(labelMaxX, labelY + Layout.defaultSpacingFix, width, Layout.defaultLabelHeight)];
+  [textField setStringValue:value];
+  return textField;
+}
+
+function createCheckboxAfterLabel(label, checked) {
+  var labelFrame = [label frame];
+  var labelY = labelFrame.origin.y;
+  var labelMaxX = CGRectGetMaxX(labelFrame);
+
+  var checkbox = [[NSButton alloc] initWithFrame:NSMakeRect(labelMaxX - Layout.defaultSpacingFix, labelY + Layout.defaultSpacingFix, Layout.checkboxSize, Layout.checkboxSize)];
+  [checkbox setButtonType:NSSwitchButton];
+  if (checked == 1) {
+    [checkbox setState:NSOnState];
+  }
+  return checkbox;
+}
+
+function createBoxForControls(controls, title, y) {
+  var box = [[NSBox alloc] initWithFrame:NSMakeRect(0.0, y, 0.0, 0.0)];
+  [box setTitle:title];
+
+  for (var i = 0; i < controls.length; i++) {
+    [box addSubview:controls[i]];
+  }
+
+  [box setContentViewMargins:NSMakeSize(Layout.boxMargin, Layout.boxMargin)];
+  [box sizeToFit];
+
+  return box;
+}
+
+function createColorsBoxForShape(title, y, color1, color2) {
+  var spacer = [[NSView alloc] initWithFrame:Layout.colorBoxSpacerFrame];
+
+  var color1LabelFrame = NSMakeRect(0.0, Layout.colorBoxLabelY, Layout.defaultLabelWidth, Layout.defaultLabelHeight);
+  var color1Label = createLabel("Color 1:", Layout.normalFont, Layout.fontColor, color1LabelFrame);
+  var color1Field = createTextFieldAfterLabel(color1Label, color1, Layout.defaultFontColorFieldWidth);
+
+  var color2LabelFrame = NSMakeRect(Layout.defaultFontColorFieldWidth * 2, Layout.colorBoxLabelY, Layout.defaultLabelWidth, Layout.defaultLabelHeight);
+  var color2Label = createLabel("Color 2:", Layout.normalFont, Layout.fontColor, color2LabelFrame);
+  var color2Field = createTextFieldAfterLabel(color2Label, color2, Layout.defaultFontColorFieldWidth);
+
+  var controls = [spacer, color1Label, color1Field, color2Label, color2Field];
+  return [createBoxForControls(controls, title, y), [color1Field, color2Field]];
+}
+
+function createShapeColorsBox(y) {
+  var spacer = [[NSView alloc] initWithFrame:Layout.shapeBoxSpacerFrame];
+
+  var seColor1 = readValueForKey(Settings.startEndColor1Key);
+  var seColor2 = readValueForKey(Settings.startEndColor2Key);
+  var startEnd = createColorsBoxForShape("Start / End", Layout.shapeBoxElementSpacing * 3, seColor1, seColor2);
+  var startEndBox = startEnd[0];
+  startEndColorFields = startEnd[1];
+
+  var pColor1 = readValueForKey(Settings.processColor1Key);
+  var pColor2 = readValueForKey(Settings.processColor2Key);
+  var process = createColorsBoxForShape("Process", Layout.shapeBoxElementSpacing * 2, pColor1, pColor2);
+  var processBox = process[0];
+  processColorFields = process[1];
+
+  var dColor1 = readValueForKey(Settings.decisionColor1Key);
+  var dColor2 = readValueForKey(Settings.decisionColor2Key);
+  var decision = createColorsBoxForShape("Decision", Layout.shapeBoxElementSpacing * 1, dColor1, dColor2);
+  var decisionBox = decision[0];
+  decisionColorFields = decision[1];
+
+  var ioColor1 = readValueForKey(Settings.inputOutputColor1Key);
+  var ioColor2 = readValueForKey(Settings.inputOutputColor2Key);
+  var inputOutput = createColorsBoxForShape("Input / Output", Layout.shapeBoxElementSpacing * 0, ioColor1, ioColor2);
+  var inputOutputBox = inputOutput[0];
+  inputOutputColorFields = inputOutput[1];
+
+  var controls = [spacer, startEndBox, processBox, decisionBox, inputOutputBox];
+  var box = createBoxForControls(controls, "Shape Colors", y);
+  [[box titleCell] setFont:Layout.boldFont];
+  [[box titleCell] setTextColor:Layout.fontColor];
+  [box setTitle:"Shape Colors"];
+  [box sizeToFit];
+  return box;
+}
+
+function createLabelFontBox(y) {
+  var spacer = [[NSView alloc] initWithFrame:Layout.fontBoxSpacerFrame];
+
+  var fontNameLabelFrame = NSMakeRect(0.0, Layout.fontBoxElementSpacing * 3, Layout.defaultLabelWidth, Layout.defaultLabelHeight);
+  var fontNameLabel = createLabel("Name:", Layout.normalFont, Layout.fontColor, fontNameLabelFrame);
+  var fName = readValueForKey(Settings.labelFontNameKey);
+  fontNameField = createTextFieldAfterLabel(fontNameLabel, fName, Layout.fontNameFieldWidth);
+
+  var fontSizeLabelFrame = NSMakeRect(0.0, Layout.fontBoxElementSpacing * 2, Layout.defaultLabelWidth, Layout.defaultLabelHeight);
+  var fontSizeLabel = createLabel("Size:", Layout.normalFont, Layout.fontColor, fontSizeLabelFrame);
+  var fSize = readValueForKey(Settings.labelFontSizeKey);
+  fontSizeField = createTextFieldAfterLabel(fontSizeLabel, fSize, Layout.fontSizeFieldWidth);
+
+  var fontColorLabelFrame = NSMakeRect(0.0, Layout.fontBoxElementSpacing * 1, Layout.defaultLabelWidth, Layout.defaultLabelHeight);
+  var fontColorLabel = createLabel("Color:", Layout.normalFont, Layout.fontColor, fontColorLabelFrame);
+  var fColor = readValueForKey(Settings.labelFontColorKey);
+  fontColorField = createTextFieldAfterLabel(fontColorLabel, fColor, Layout.defaultFontColorFieldWidth);
+
+  var fontShadowLabelFrame = NSMakeRect(0.0, Layout.fontBoxElementSpacing * 0, Layout.defaultLabelWidth, Layout.defaultLabelHeight);
+  var fontShadowLabel = createLabel("Shadow:", Layout.normalFont, Layout.fontColor, fontShadowLabelFrame);
+  var fShadow = readValueForKey(Settings.labelDropShadowKey);
+  fontShadowCheckbox = createCheckboxAfterLabel(fontShadowLabel, fShadow);
+
+  var controls = [spacer, fontNameLabel, fontNameField, fontSizeLabel, fontSizeField, fontColorLabel, fontColorField, fontShadowLabel, fontShadowCheckbox];
+  var box = createBoxForControls(controls, "Label Font", y);
+  [[box titleCell] setFont:Layout.boldFont];
+  [[box titleCell] setTextColor:Layout.fontColor];
+  [box setTitle:"Label Font"];
+  [box sizeToFit];
+  return box;
+}
+
+function createMainBox() {
+  var spacer = [[NSView alloc] initWithFrame:Layout.mainBoxSpacerFrame];
+
+  var labelFontBox = createLabelFontBox(Layout.fontBoxY);
+  var shapeColorsBox = createShapeColorsBox(0.0);
+
+  var controls = [spacer, labelFontBox, shapeColorsBox];
+  return createBoxForControls(controls, "", 0.0);
+}
+
+function createFormInAlertWithMessage(message) {
+  var alert = [[NSAlert alloc] init];
+  [alert setMessageText:message];
+  [alert addButtonWithTitle:"OK"];
+  [alert addButtonWithTitle:"Cancel"];
+  [alert addButtonWithTitle:"Defaults"];
+  [alert setAccessoryView:createMainBox()];
+  return [alert runModal];
+}
+
+function saveSettings() {
+  // get current values
+  var fontName = [fontNameField stringValue];
+  var fontSize = [fontSizeField stringValue];
+  var fontColor = [fontColorField stringValue];
+  var fontShadow = [fontShadowCheckbox intValue];
+
+  var startEndColor1Field = startEndColorFields[0];
+  var startEndColor2Field = startEndColorFields[1];
+  var startEndColor1 = [startEndColor1Field stringValue];
+  var startEndColor2 = [startEndColor2Field stringValue];
+
+  var processColor1Field = processColorFields[0];
+  var processColor2Field = processColorFields[1];
+  var processColor1 = [processColor1Field stringValue];
+  var processColor2 = [processColor2Field stringValue];
+
+  var decisionColor1Field = decisionColorFields[0];
+  var decisionColor2Field = decisionColorFields[1];
+  var decisionColor1 = [decisionColor1Field stringValue];
+  var decisionColor2 = [decisionColor2Field stringValue];
+
+  var inputOutputColor1Field = inputOutputColorFields[0];
+  var inputOutputColor2Field = inputOutputColorFields[1];
+  var inputOutputColor1 = [inputOutputColor1Field stringValue];
+  var inputOutputColor2 = [inputOutputColor2Field stringValue];
+
+  // label font
+  writeValueForKey(Settings.labelFontNameKey, fontName);
+  writeValueForKey(Settings.labelFontSizeKey, fontSize);
+  writeValueForKey(Settings.labelFontColorKey, fontColor);
+  writeValueForKey(Settings.labelDropShadowKey, fontShadow);
+
+  // shape colors
+  writeValueForKey(Settings.startEndColor1Key, startEndColor1);
+  writeValueForKey(Settings.startEndColor2Key, startEndColor2);
+  writeValueForKey(Settings.processColor1Key, processColor1);
+  writeValueForKey(Settings.processColor2Key, processColor2);
+  writeValueForKey(Settings.decisionColor1Key, decisionColor1);
+  writeValueForKey(Settings.decisionColor2Key, decisionColor2);
+  writeValueForKey(Settings.inputOutputColor1Key, inputOutputColor1);
+  writeValueForKey(Settings.inputOutputColor2Key, inputOutputColor2);
+}
+
+function restoreDefaults() {
+  var keys = allSettingKeys();
+  for (var i = 0; i < keys.length; i++) {
+    restoreDefaultValueForKey(keys[i]);
+  }
+}
+
+function main() {
+  var responseCode = createFormInAlertWithMessage("AEFlowchart");
+
+  if (responseCode == 1000) {
+    saveSettings();
+  } else if (responseCode == 1002) {
+    restoreDefaults();
+  }
+}
+
+main();
