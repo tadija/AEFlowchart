@@ -38,9 +38,11 @@ function processShape(label)
   [gradient setColor:[MSColor colorWithSVGString:readValueForKey(Settings.processColor1Key)] atIndex:0];
   [gradient setColor:[MSColor colorWithSVGString:readValueForKey(Settings.processColor2Key)] atIndex:1];
 
-  // add default inner shadow
-  var innerShadows = [shapeStyle innerShadows];
-  if([innerShadows count] <= 0) [innerShadows addNewStylePart];
+  if (readValueForKey(Settings.shapeInnerShadowKey) == 1) {
+    // add default inner shadow
+    var innerShadows = [shapeStyle innerShadows];
+    if([innerShadows count] <= 0) [innerShadows addNewStylePart];
+  }
 
   return shapeGroup;
 }
