@@ -16,7 +16,10 @@ var Keys = {
   decisionColor2Key: "net.tadija.AEFlowchart.decisionColor2",
   inputOutputColor1Key: "net.tadija.AEFlowchart.inputOutputColor1",
   inputOutputColor2Key: "net.tadija.AEFlowchart.inputOutputColor2",
-  shapeInnerShadowKey: "net.tadija.AEFlowchart.shapeInnerShadow"
+  shapeInnerShadowKey: "net.tadija.AEFlowchart.shapeInnerShadow",
+
+  connectionLineColorKey: "net.tadija.AEFlowchart.connectionLineColorKey",
+  connectionLineThicknessKey: "net.tadija.AEFlowchart.connectionLineThicknessKey"
 };
 
 var Defaults = {
@@ -33,7 +36,10 @@ var Defaults = {
   [Keys.decisionColor2Key]: "#5856D6",
   [Keys.inputOutputColor1Key]: "#B4EC51",
   [Keys.inputOutputColor2Key]: "#429321",
-  [Keys.shapeInnerShadowKey]: 1
+  [Keys.shapeInnerShadowKey]: 1,
+
+  [Keys.connectionLineColorKey]: "#DBDDDE",
+  [Keys.connectionLineThicknessKey]: 1
 };
 
 function readValueForKey(key) {
