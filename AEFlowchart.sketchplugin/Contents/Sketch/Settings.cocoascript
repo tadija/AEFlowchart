@@ -1,0 +1,62 @@
+// Sketch Plugin: AEFlowchart - Settings
+// Source: github.com/tadija/AEFlowchart
+// Version: 2.0
+
+var Keys = {
+  labelFontNameKey: "net.tadija.AEFlowchart.labelFontName",
+  labelFontSizeKey: "net.tadija.AEFlowchart.labelFontSize",
+  labelFontColorKey: "net.tadija.AEFlowchart.labelFontColor",
+  labelDropShadowKey: "net.tadija.AEFlowchart.labelDropShadow",
+
+  startEndColor1Key: "net.tadija.AEFlowchart.startEndColor1",
+  startEndColor2Key: "net.tadija.AEFlowchart.startEndColor2",
+  processColor1Key: "net.tadija.AEFlowchart.processColor1",
+  processColor2Key: "net.tadija.AEFlowchart.processColor2",
+  decisionColor1Key: "net.tadija.AEFlowchart.decisionColor1",
+  decisionColor2Key: "net.tadija.AEFlowchart.decisionColor2",
+  inputOutputColor1Key: "net.tadija.AEFlowchart.inputOutputColor1",
+  inputOutputColor2Key: "net.tadija.AEFlowchart.inputOutputColor2",
+  shapeInnerShadowKey: "net.tadija.AEFlowchart.shapeInnerShadow",
+
+  connectionLineColorKey: "net.tadija.AEFlowchart.connectionLineColorKey",
+  connectionLineThicknessKey: "net.tadija.AEFlowchart.connectionLineThicknessKey"
+};
+
+var Defaults = {
+  [Keys.labelFontNameKey]: "Andale Mono",
+  [Keys.labelFontSizeKey]: 14,
+  [Keys.labelFontColorKey]: "#FFFFFF",
+  [Keys.labelDropShadowKey]: 1,
+
+  [Keys.startEndColor1Key]: "#FF5B37",
+  [Keys.startEndColor2Key]: "#FB2B69",
+  [Keys.processColor1Key]: "#1AD6FD",
+  [Keys.processColor2Key]: "#1D62F0",
+  [Keys.decisionColor1Key]: "#C644FC",
+  [Keys.decisionColor2Key]: "#5856D6",
+  [Keys.inputOutputColor1Key]: "#B4EC51",
+  [Keys.inputOutputColor2Key]: "#429321",
+  [Keys.shapeInnerShadowKey]: 1,
+
+  [Keys.connectionLineColorKey]: "#DBDDDE",
+  [Keys.connectionLineThicknessKey]: 1
+};
+
+function readValueForKey(key) {
+  var value = [[NSUserDefaults standardUserDefaults] objectForKey:key];
+  if (value == null) {
+    return Defaults[key];
+  } else {
+    return value;
+  }
+}
+
+function writeValueForKey(key, value) {
+  [[NSUserDefaults standardUserDefaults] setObject:value forKey:key];
+  [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+function restoreDefaultValueForKey(key) {
+  [[NSUserDefaults standardUserDefaults] removeObjectForKey:key];
+  [[NSUserDefaults standardUserDefaults] synchronize];
+}

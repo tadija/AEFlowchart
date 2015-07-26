@@ -1,11 +1,14 @@
 // Sketch Plugin: AEFlowchart - Process (ctrl shift p)
 // Source: github.com/tadija/AEFlowchart
-// Version: 1.0
+// Version: 2.0
 
-@import 'AEFlowchart.js'
+@import 'AEFlowchart.cocoascript'
+@import 'Settings.cocoascript'
 
-/*  call AEFlowchart main function with custom name and shape function  */
-createStep("Process", processShape);
+function createProcessStep(context) {
+  /*  call AEFlowchart main function with custom name and shape function  */
+  createStep("Process", processShape, context);
+}
 
 /*  draw process rectangle shape for given label  */
 function processShape(label)
@@ -34,12 +37,14 @@ function processShape(label)
   // add gradient fill
   [shapeFill setFillType: 1];
   var gradient = [shapeFill gradient];
-  [gradient setColor:[MSColor colorWithSVGString:"#1AD6FD"] atIndex:0];
-  [gradient setColor:[MSColor colorWithSVGString:"#1D62F0"] atIndex:1];
+  [gradient setColor:[MSColor colorWithSVGString:readValueForKey(Keys.processColor1Key)] atIndex:0];
+  [gradient setColor:[MSColor colorWithSVGString:readValueForKey(Keys.processColor2Key)] atIndex:1];
 
-  // add default inner shadow
-  var innerShadows = [shapeStyle innerShadows];
-  if([innerShadows count] <= 0) [innerShadows addNewStylePart];
+  if (readValueForKey(Keys.shapeInnerShadowKey) == 1) {
+    // add default inner shadow
+    var innerShadows = [shapeStyle innerShadows];
+    if([innerShadows count] <= 0) [innerShadows addNewStylePart];
+  }
 
   return shapeGroup;
 }

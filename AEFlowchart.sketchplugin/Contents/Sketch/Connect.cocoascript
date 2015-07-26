@@ -1,11 +1,13 @@
 // Sketch Plugin: AEFlowchart - Connect (ctrl shift c)
 // Source: github.com/tadija/AEFlowchart
-// Version: 1.0
+// Version: 2.0
 
-@import 'AEFlowchart.js'
+@import 'AEFlowchart.cocoascript'
 
-/*  call AEFlowchart main function with custom name and lineShape function  */
-connectSteps(drawAllConnections);
+function createConnectionLines(context) {
+  /*  call AEFlowchart main function with custom name and lineShape function  */
+  connectSteps(drawAllConnections, context);
+}
 
 function drawAllConnections(selection)
 {
@@ -53,8 +55,8 @@ function drawOneConnection(twoSteps)
   var secondStepLeft = [secondStepFrame minX] - connectionsGroupX;
   var secondStepHorizontalMiddle = [secondStepFrame midX] - connectionsGroupX;
   var secondStepVerticalMiddle = [secondStepFrame midY] - connectionsGroupY;
-  var horizontalSpacingHalf = (secondStepLeft - firstStepRight) / 2;
-  var verticalSpacingHalf = (secondStepTop - firstStepBottom) / 2;
+  var horizontalSpacingHalf = (secondStepLeft - firstStepRight) / 2.0;
+  var verticalSpacingHalf = (secondStepTop - firstStepBottom) / 2.0;
   var horizontalMiddleDifference = firstStepHorizontalMiddle - secondStepHorizontalMiddle;
   var verticalMiddleDifference = firstStepVerticalMiddle - secondStepVerticalMiddle;
 
@@ -95,7 +97,8 @@ function drawOneConnection(twoSteps)
   var borders = [lineShapeStyle borders];
   if([borders count] <= 0) [borders addNewStylePart];
   var border = [lineShapeStyle border];
-  [border setColor:[MSColor colorWithSVGString:"#DBDDDE"]];
+  [border setColor:[MSColor colorWithSVGString:readValueForKey(Keys.connectionLineColorKey)]];
+  [border setThickness:readValueForKey(Keys.connectionLineThicknessKey)];
 
   // add line shape to connectionsGroup
   [connectionsGroup addLayers:[lineShape]];

@@ -1,11 +1,14 @@
 // Sketch Plugin: AEFlowchart - Decision (ctrl shift d)
 // Source: github.com/tadija/AEFlowchart
-// Version: 1.0
+// Version: 2.0
 
-@import 'AEFlowchart.js'
+@import 'AEFlowchart.cocoascript'
+@import 'Settings.cocoascript'
 
-/*  call AEFlowchart main function with custom name and shape function  */
-createStep("Decision", decisionShape);
+function createDecisionStep(context) {
+  /*  call AEFlowchart main function with custom name and shape function  */
+  createStep("Decision", decisionShape, context);
+}
 
 /*  draw decision diamond shape for given label  */
 function decisionShape(label)
@@ -47,12 +50,14 @@ function decisionShape(label)
   // add gradient fill
   [shapeFill setFillType: 1];
   var gradient = [shapeFill gradient];
-  [gradient setColor:[MSColor colorWithSVGString:"#C644FC"] atIndex:0];
-  [gradient setColor:[MSColor colorWithSVGString:"#5856D6"] atIndex:1];
+  [gradient setColor:[MSColor colorWithSVGString:readValueForKey(Keys.decisionColor1Key)] atIndex:0];
+  [gradient setColor:[MSColor colorWithSVGString:readValueForKey(Keys.decisionColor2Key)] atIndex:1];
 
-  // add default inner shadow
-  var innerShadows = [shapeStyle innerShadows];
-  if([innerShadows count] <= 0) [innerShadows addNewStylePart];
+  if (readValueForKey(Keys.shapeInnerShadowKey) == 1) {
+    // add default inner shadow
+    var innerShadows = [shapeStyle innerShadows];
+    if([innerShadows count] <= 0) [innerShadows addNewStylePart];
+  }
 
   return shape;
 }

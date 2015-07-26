@@ -1,14 +1,17 @@
 // Sketch Plugin: AEFlowchart (main library)
 // Source: github.com/tadija/AEFlowchart
-// Version: 1.0
+// Version: 2.0
 
-@import 'AELabelSettings.js'
+@import 'Settings.cocoascript'
 
 /*	this is the method which should be called from AEFlowchart plugins
 		- elementName should be string which will be used for items naming
 		- drawShape should be method which returns some shape for the given label	*/
-function createStep(stepName, drawShape)
+function createStep(stepName, drawShape, context)
 {
+	var selection = context.selection;
+	var doc = context.document;
+
 	if([selection count] == 0) {
 		[doc showMessage:"Oops, you have to select some text layer"];
 	}
@@ -33,8 +36,11 @@ function createStep(stepName, drawShape)
 }
 
 /*	draw connection lines between selected objects (from top to bottom)	*/
-function connectSteps(drawConnections)
+function connectSteps(drawConnections, context)
 {
+	var selection = context.selection;
+	var doc = context.document;
+
 	if([selection count] < 2) {
 		[doc showMessage:"Oops, you have to select at least two layers"];
 	} else {
@@ -42,7 +48,7 @@ function connectSteps(drawConnections)
 	}
 }
 
-/*	style the label as defined in AELabelSettings.js	*/
+/*	style the label as defined in Settings	*/
 function styleStepTitle(label)
 {
 	// get current label position
@@ -51,9 +57,9 @@ function styleStepTitle(label)
 	var currentMidY = [currentFrame midY];
 
 	// label settings
-	[label setFontPostscriptName:labelFontName];
-	[label setFontSize:labelFontSize];
-	[label setTextColor:[MSColor colorWithSVGString:labelFontColor]];
+	[label setFontPostscriptName:readValueForKey(Keys.labelFontNameKey)];
+	[label setFontSize:readValueForKey(Keys.labelFontSizeKey)];
+	[label setTextColor:[MSColor colorWithSVGString:readValueForKey(Keys.labelFontColorKey)]];
 	[label setTextAlignment:2]; // center
 
 	// restore label position
@@ -61,7 +67,7 @@ function styleStepTitle(label)
 	[newFrame setMidX:currentMidX];
 	[newFrame setMidY:currentMidY];
 
-	if (labelDropShadow) {
+	if (readValueForKey(Keys.labelDropShadow) == 1) {
 		// add default shadow
 		var shadows = [[label style] shadows];
 		if([shadows count] <= 0) [shadows addNewStylePart];
