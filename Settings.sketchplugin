@@ -9,11 +9,14 @@ var fontSizeField;
 var fontColorField;
 var fontShadowCheckbox;
 
+var shapeInnerShadowCheckbox;
 var startEndColorFields;
 var processColorFields;
 var decisionColorFields;
 var inputOutputColorFields;
-var shapeInnerShadowCheckbox;
+
+var connectionLineColorField;
+var connectionLineThicknessField;
 
 var Layout = {
   normalFont: [NSFont systemFontOfSize:12.0],
@@ -28,18 +31,21 @@ var Layout = {
   boxMargin: 16.0,
 
   fontBoxSpacerFrame: NSMakeRect(0.0, 100.0, 320.0, 20.0),
-  fontBoxY: 400.0,
+  fontBoxY: 500.0,
   fontBoxElementSpacing: 30.0,
   fontNameFieldWidth: 200.0,
   fontSizeFieldWidth: 40.0,
 
   checkboxSize: 20.0,
 
+  shapesBoxY: 90.0,
+  shapeBoxSpacerFrame: NSMakeRect(0.0, 280.0, 200.0, 80.0),
+  shapeBoxElementSpacing: 70.0,
+
   colorBoxSpacerFrame: NSMakeRect(0.0, 40.0, 200.0, 24.0),
   colorBoxLabelY: 30.0,
 
-  shapeBoxSpacerFrame: NSMakeRect(0.0, 280.0, 200.0, 80.0),
-  shapeBoxElementSpacing: 70.0,
+  connectionLineBoxSpacerFrame: NSMakeRect(0.0, 50.0, 320.0, 20.0),
 
   mainBoxSpacerFrame: NSMakeRect(0.0, 530.0, 300.0, 20.0)
 };
@@ -93,6 +99,38 @@ function createBoxForControls(controls, title, y) {
   return box;
 }
 
+function createLabelFontBox(y) {
+  var spacer = [[NSView alloc] initWithFrame:Layout.fontBoxSpacerFrame];
+
+  var fontNameLabelFrame = NSMakeRect(0.0, Layout.fontBoxElementSpacing * 3, Layout.defaultLabelWidth, Layout.defaultLabelHeight);
+  var fontNameLabel = createLabel("Name:", Layout.normalFont, Layout.fontColor, fontNameLabelFrame);
+  var fName = readValueForKey(Keys.labelFontNameKey);
+  fontNameField = createTextFieldAfterLabel(fontNameLabel, fName, Layout.fontNameFieldWidth);
+
+  var fontSizeLabelFrame = NSMakeRect(0.0, Layout.fontBoxElementSpacing * 2, Layout.defaultLabelWidth, Layout.defaultLabelHeight);
+  var fontSizeLabel = createLabel("Size:", Layout.normalFont, Layout.fontColor, fontSizeLabelFrame);
+  var fSize = readValueForKey(Keys.labelFontSizeKey);
+  fontSizeField = createTextFieldAfterLabel(fontSizeLabel, fSize, Layout.fontSizeFieldWidth);
+
+  var fontColorLabelFrame = NSMakeRect(0.0, Layout.fontBoxElementSpacing * 1, Layout.defaultLabelWidth, Layout.defaultLabelHeight);
+  var fontColorLabel = createLabel("Color:", Layout.normalFont, Layout.fontColor, fontColorLabelFrame);
+  var fColor = readValueForKey(Keys.labelFontColorKey);
+  fontColorField = createTextFieldAfterLabel(fontColorLabel, fColor, Layout.defaultFontColorFieldWidth);
+
+  var fontShadowLabelFrame = NSMakeRect(0.0, Layout.fontBoxElementSpacing * 0, Layout.defaultLabelWidth, Layout.defaultLabelHeight);
+  var fontShadowLabel = createLabel("Shadow:", Layout.normalFont, Layout.fontColor, fontShadowLabelFrame);
+  var fShadow = readValueForKey(Keys.labelDropShadowKey);
+  fontShadowCheckbox = createCheckboxAfterLabel(fontShadowLabel, fShadow);
+
+  var controls = [spacer, fontNameLabel, fontNameField, fontSizeLabel, fontSizeField, fontColorLabel, fontColorField, fontShadowLabel, fontShadowCheckbox];
+  var box = createBoxForControls(controls, "Label Font", y);
+  [[box titleCell] setFont:Layout.boldFont];
+  [[box titleCell] setTextColor:Layout.fontColor];
+  [box setTitle:"Label Font"];
+  [box sizeToFit];
+  return box;
+}
+
 function createColorsBoxForShape(title, y, color1, color2) {
   var spacer = [[NSView alloc] initWithFrame:Layout.colorBoxSpacerFrame];
 
@@ -108,7 +146,7 @@ function createColorsBoxForShape(title, y, color1, color2) {
   return [createBoxForControls(controls, title, y), [color1Field, color2Field]];
 }
 
-function createShapeColorsBox(y) {
+function createShapesBox(y) {
   var spacer = [[NSView alloc] initWithFrame:Layout.shapeBoxSpacerFrame];
 
   var shapeInnerShadowLabelFrame = NSMakeRect(10.0, Layout.shapeBoxElementSpacing * 4 + 40.0, Layout.defaultLabelWidth * 2, Layout.defaultLabelHeight);
@@ -149,34 +187,24 @@ function createShapeColorsBox(y) {
   return box;
 }
 
-function createLabelFontBox(y) {
-  var spacer = [[NSView alloc] initWithFrame:Layout.fontBoxSpacerFrame];
+function createConnectionLineBox(y) {
+  var spacer = [[NSView alloc] initWithFrame:Layout.connectionLineBoxSpacerFrame];
 
-  var fontNameLabelFrame = NSMakeRect(0.0, Layout.fontBoxElementSpacing * 3, Layout.defaultLabelWidth, Layout.defaultLabelHeight);
-  var fontNameLabel = createLabel("Name:", Layout.normalFont, Layout.fontColor, fontNameLabelFrame);
-  var fName = readValueForKey(Keys.labelFontNameKey);
-  fontNameField = createTextFieldAfterLabel(fontNameLabel, fName, Layout.fontNameFieldWidth);
+  var connectionLineColorLabelFrame = NSMakeRect(0.0, Layout.fontBoxElementSpacing * 1, Layout.defaultLabelWidth, Layout.defaultLabelHeight);
+  var connectionLineColorLabel = createLabel("Color:", Layout.normalFont, Layout.fontColor, connectionLineColorLabelFrame);
+  var clColor = readValueForKey(Keys.connectionLineColorKey);
+  connectionLineColorField = createTextFieldAfterLabel(connectionLineColorLabel, clColor, Layout.defaultFontColorFieldWidth);
 
-  var fontSizeLabelFrame = NSMakeRect(0.0, Layout.fontBoxElementSpacing * 2, Layout.defaultLabelWidth, Layout.defaultLabelHeight);
-  var fontSizeLabel = createLabel("Size:", Layout.normalFont, Layout.fontColor, fontSizeLabelFrame);
-  var fSize = readValueForKey(Keys.labelFontSizeKey);
-  fontSizeField = createTextFieldAfterLabel(fontSizeLabel, fSize, Layout.fontSizeFieldWidth);
+  var connectionLineThicknessLabelFrame = NSMakeRect(0.0, Layout.fontBoxElementSpacing * 0, Layout.defaultLabelWidth, Layout.defaultLabelHeight);
+  var connectionLineThicknessLabel = createLabel("Thickness:", Layout.normalFont, Layout.fontColor, connectionLineThicknessLabelFrame);
+  var clThickness = readValueForKey(Keys.connectionLineThicknessKey);
+  connectionLineThicknessField = createTextFieldAfterLabel(connectionLineThicknessLabel, clThickness, Layout.fontSizeFieldWidth);
 
-  var fontColorLabelFrame = NSMakeRect(0.0, Layout.fontBoxElementSpacing * 1, Layout.defaultLabelWidth, Layout.defaultLabelHeight);
-  var fontColorLabel = createLabel("Color:", Layout.normalFont, Layout.fontColor, fontColorLabelFrame);
-  var fColor = readValueForKey(Keys.labelFontColorKey);
-  fontColorField = createTextFieldAfterLabel(fontColorLabel, fColor, Layout.defaultFontColorFieldWidth);
-
-  var fontShadowLabelFrame = NSMakeRect(0.0, Layout.fontBoxElementSpacing * 0, Layout.defaultLabelWidth, Layout.defaultLabelHeight);
-  var fontShadowLabel = createLabel("Shadow:", Layout.normalFont, Layout.fontColor, fontShadowLabelFrame);
-  var fShadow = readValueForKey(Keys.labelDropShadowKey);
-  fontShadowCheckbox = createCheckboxAfterLabel(fontShadowLabel, fShadow);
-
-  var controls = [spacer, fontNameLabel, fontNameField, fontSizeLabel, fontSizeField, fontColorLabel, fontColorField, fontShadowLabel, fontShadowCheckbox];
-  var box = createBoxForControls(controls, "Label Font", y);
+  var controls = [spacer, connectionLineColorLabel, connectionLineColorField, connectionLineThicknessLabel, connectionLineThicknessField];
+  var box = createBoxForControls(controls, "Connection Lines", y);
   [[box titleCell] setFont:Layout.boldFont];
   [[box titleCell] setTextColor:Layout.fontColor];
-  [box setTitle:"Label Font"];
+  [box setTitle:"Connection Lines"];
   [box sizeToFit];
   return box;
 }
@@ -185,10 +213,13 @@ function createMainBox() {
   var spacer = [[NSView alloc] initWithFrame:Layout.mainBoxSpacerFrame];
 
   var labelFontBox = createLabelFontBox(Layout.fontBoxY);
-  var shapeColorsBox = createShapeColorsBox(0.0);
+  var shapesBox = createShapesBox(Layout.shapesBoxY);
+  var connectionLineBox = createConnectionLineBox(0.0);
 
-  var controls = [spacer, labelFontBox, shapeColorsBox];
-  return createBoxForControls(controls, "", 0.0);
+  var controls = [spacer, labelFontBox, shapesBox, connectionLineBox];
+  var box = createBoxForControls(controls, "", 0.0);
+  [box sizeToFit];
+  return box;
 }
 
 function createFormInAlertWithMessage(message) {
@@ -230,6 +261,9 @@ function saveSettings() {
   var inputOutputColor1 = [inputOutputColor1Field stringValue];
   var inputOutputColor2 = [inputOutputColor2Field stringValue];
 
+  var connectionLineColor = [connectionLineColorField stringValue];
+  var connectionLineThickness = [connectionLineThicknessField stringValue];
+
   // set values
 
   writeValueForKey(Keys.labelFontNameKey, fontName);
@@ -246,6 +280,9 @@ function saveSettings() {
   writeValueForKey(Keys.inputOutputColor1Key, inputOutputColor1);
   writeValueForKey(Keys.inputOutputColor2Key, inputOutputColor2);
   writeValueForKey(Keys.shapeInnerShadowKey, shapeInnerShadow);
+
+  writeValueForKey(Keys.connectionLineColorKey, connectionLineColor);
+  writeValueForKey(Keys.connectionLineThicknessKey, connectionLineThickness);
 }
 
 function restoreDefaults() {
