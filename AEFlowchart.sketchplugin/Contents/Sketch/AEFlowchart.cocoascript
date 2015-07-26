@@ -1,14 +1,17 @@
 // Sketch Plugin: AEFlowchart (main library)
 // Source: github.com/tadija/AEFlowchart
-// Version: 1.1
+// Version: 2.0
 
-@import 'Settings.js'
+@import 'Settings.cocoascript'
 
 /*	this is the method which should be called from AEFlowchart plugins
 		- elementName should be string which will be used for items naming
 		- drawShape should be method which returns some shape for the given label	*/
-function createStep(stepName, drawShape)
+function createStep(stepName, drawShape, context)
 {
+	var selection = context.selection;
+	var doc = context.document;
+
 	if([selection count] == 0) {
 		[doc showMessage:"Oops, you have to select some text layer"];
 	}
@@ -33,8 +36,11 @@ function createStep(stepName, drawShape)
 }
 
 /*	draw connection lines between selected objects (from top to bottom)	*/
-function connectSteps(drawConnections)
+function connectSteps(drawConnections, context)
 {
+	var selection = context.selection;
+	var doc = context.document;
+
 	if([selection count] < 2) {
 		[doc showMessage:"Oops, you have to select at least two layers"];
 	} else {

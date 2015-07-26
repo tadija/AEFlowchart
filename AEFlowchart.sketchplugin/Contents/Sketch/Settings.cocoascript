@@ -1,6 +1,6 @@
-// Sketch Plugin: AEFlowchart (Settings.js)
+// Sketch Plugin: AEFlowchart - Settings
 // Source: github.com/tadija/AEFlowchart
-// Version: 1.1
+// Version: 2.0
 
 var Keys = {
   labelFontNameKey: "net.tadija.AEFlowchart.labelFontName",

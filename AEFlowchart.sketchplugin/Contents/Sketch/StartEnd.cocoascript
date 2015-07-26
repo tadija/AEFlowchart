@@ -1,12 +1,14 @@
 // Sketch Plugin: AEFlowchart - StartEnd (ctrl shift s)
 // Source: github.com/tadija/AEFlowchart
-// Version: 1.1
+// Version: 2.0
 
-@import 'AEFlowchart.js'
-@import 'Settings.js'
+@import 'AEFlowchart.cocoascript'
+@import 'Settings.cocoascript'
 
-/*  call AEFlowchart main function with custom name and shape function  */
-createStep("StartEnd", startEndShape);
+function startEnd(context) {
+  /*  call AEFlowchart main function with custom name and shape function  */
+  createStep("StartEnd", startEndShape, context);  
+}
 
 /*  draw start-end rounded rectangle shape for given label  */
 function startEndShape(label)

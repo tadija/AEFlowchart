@@ -1,11 +1,13 @@
 // Sketch Plugin: AEFlowchart - Connect (ctrl shift c)
 // Source: github.com/tadija/AEFlowchart
-// Version: 1.0
+// Version: 2.0
 
-@import 'AEFlowchart.js'
+@import 'AEFlowchart.cocoascript'
 
-/*  call AEFlowchart main function with custom name and lineShape function  */
-connectSteps(drawAllConnections);
+function connect(context) {
+  /*  call AEFlowchart main function with custom name and lineShape function  */
+  connectSteps(drawAllConnections, context);  
+}
 
 function drawAllConnections(selection)
 {

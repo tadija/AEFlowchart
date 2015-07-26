@@ -1,12 +1,14 @@
 // Sketch Plugin: AEFlowchart - Decision (ctrl shift d)
 // Source: github.com/tadija/AEFlowchart
-// Version: 1.1
+// Version: 2.0
 
-@import 'AEFlowchart.js'
-@import 'Settings.js'
+@import 'AEFlowchart.cocoascript'
+@import 'Settings.cocoascript'
 
-/*  call AEFlowchart main function with custom name and shape function  */
-createStep("Decision", decisionShape);
+function decision(context) {
+  /*  call AEFlowchart main function with custom name and shape function  */
+  createStep("Decision", decisionShape, context);  
+}
 
 /*  draw decision diamond shape for given label  */
 function decisionShape(label)

@@ -1,12 +1,14 @@
 // Sketch Plugin: AEFlowchart - Process (ctrl shift p)
 // Source: github.com/tadija/AEFlowchart
-// Version: 1.1
+// Version: 2.0
 
-@import 'AEFlowchart.js'
-@import 'Settings.js'
+@import 'AEFlowchart.cocoascript'
+@import 'Settings.cocoascript'
 
-/*  call AEFlowchart main function with custom name and shape function  */
-createStep("Process", processShape);
+function process(context) {
+  /*  call AEFlowchart main function with custom name and shape function  */
+  createStep("Process", processShape, context);  
+}
 
 /*  draw process rectangle shape for given label  */
 function processShape(label)

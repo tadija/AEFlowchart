@@ -1,8 +1,8 @@
-// Sketch Plugin: AEFlowchart - Settings
+// Sketch Plugin: AEFlowchart - Settings UI
 // Source: github.com/tadija/AEFlowchart
-// Version: 1.1
+// Version: 2.0
 
-@import 'Settings.js'
+@import 'Settings.cocoascript'
 
 var fontNameField;
 var fontSizeField;
@@ -305,4 +305,6 @@ function main() {
   }
 }
 
-main();
+function settings(context) {
+  main();
+}

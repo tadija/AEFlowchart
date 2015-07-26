@@ -1,12 +1,14 @@
 // Sketch Plugin: AEFlowchart - InputOutput (ctrl shift o)
 // Source: github.com/tadija/AEFlowchart
-// Version: 1.1
+// Version: 2.0
 
-@import 'AEFlowchart.js'
-@import 'Settings.js'
+@import 'AEFlowchart.cocoascript'
+@import 'Settings.cocoascript'
 
-/*  call AEFlowchart main function with custom name and shape function  */
-createStep("InputOutput", inputOutputShape);
+function inputOutput(context) {
+  /*  call AEFlowchart main function with custom name and shape function  */
+  createStep("InputOutput", inputOutputShape, context);
+}
 
 /*  draw input-output parallelogram shape for given label  */
 function inputOutputShape(label)
