@@ -1,8 +1,8 @@
 // Sketch Plugin: AEFlowchart (main library)
 // Source: github.com/tadija/AEFlowchart
-// Version: 1.0
+// Version: 1.1
 
-@import 'AELabelSettings.js'
+@import 'Settings.js'
 
 /*	this is the method which should be called from AEFlowchart plugins
 		- elementName should be string which will be used for items naming
@@ -51,9 +51,9 @@ function styleStepTitle(label)
 	var currentMidY = [currentFrame midY];
 
 	// label settings
-	[label setFontPostscriptName:labelFontName];
-	[label setFontSize:labelFontSize];
-	[label setTextColor:[MSColor colorWithSVGString:labelFontColor]];
+	[label setFontPostscriptName:readValueForKey(Settings.labelFontNameKey)];
+	[label setFontSize:readValueForKey(Settings.labelFontSizeKey)];
+	[label setTextColor:[MSColor colorWithSVGString:readValueForKey(Settings.labelFontColorKey)]];
 	[label setTextAlignment:2]; // center
 
 	// restore label position
@@ -61,7 +61,7 @@ function styleStepTitle(label)
 	[newFrame setMidX:currentMidX];
 	[newFrame setMidY:currentMidY];
 
-	if (labelDropShadow) {
+	if (readValueForKey(Settings.labelDropShadow) == 1) {
 		// add default shadow
 		var shadows = [[label style] shadows];
 		if([shadows count] <= 0) [shadows addNewStylePart];

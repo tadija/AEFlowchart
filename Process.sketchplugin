@@ -1,8 +1,9 @@
 // Sketch Plugin: AEFlowchart - Process (ctrl shift p)
 // Source: github.com/tadija/AEFlowchart
-// Version: 1.0
+// Version: 1.1
 
 @import 'AEFlowchart.js'
+@import 'Settings.js'
 
 /*  call AEFlowchart main function with custom name and shape function  */
 createStep("Process", processShape);
@@ -34,8 +35,8 @@ function processShape(label)
   // add gradient fill
   [shapeFill setFillType: 1];
   var gradient = [shapeFill gradient];
-  [gradient setColor:[MSColor colorWithSVGString:"#1AD6FD"] atIndex:0];
-  [gradient setColor:[MSColor colorWithSVGString:"#1D62F0"] atIndex:1];
+  [gradient setColor:[MSColor colorWithSVGString:readValueForKey(Settings.processColor1Key)] atIndex:0];
+  [gradient setColor:[MSColor colorWithSVGString:readValueForKey(Settings.processColor2Key)] atIndex:1];
 
   // add default inner shadow
   var innerShadows = [shapeStyle innerShadows];

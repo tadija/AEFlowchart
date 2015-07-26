@@ -1,8 +1,9 @@
 // Sketch Plugin: AEFlowchart - InputOutput (ctrl shift o)
 // Source: github.com/tadija/AEFlowchart
-// Version: 1.0
+// Version: 1.1
 
 @import 'AEFlowchart.js'
+@import 'Settings.js'
 
 /*  call AEFlowchart main function with custom name and shape function  */
 createStep("InputOutput", inputOutputShape);
@@ -45,8 +46,8 @@ function inputOutputShape(label)
   // add gradient fill
   [shapeFill setFillType: 1];
   var gradient = [shapeFill gradient];
-  [gradient setColor:[MSColor colorWithSVGString:"#B4EC51"] atIndex:0];
-  [gradient setColor:[MSColor colorWithSVGString:"#429321"] atIndex:1];
+  [gradient setColor:[MSColor colorWithSVGString:readValueForKey(Settings.inputOutputColor1Key)] atIndex:0];
+  [gradient setColor:[MSColor colorWithSVGString:readValueForKey(Settings.inputOutputColor2Key)] atIndex:1];
 
   // add default inner shadow
   var innerShadows = [shapeStyle innerShadows];

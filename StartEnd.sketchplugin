@@ -1,8 +1,9 @@
 // Sketch Plugin: AEFlowchart - StartEnd (ctrl shift s)
 // Source: github.com/tadija/AEFlowchart
-// Version: 1.0
+// Version: 1.1
 
 @import 'AEFlowchart.js'
+@import 'Settings.js'
 
 /*  call AEFlowchart main function with custom name and shape function  */
 createStep("StartEnd", startEndShape);
@@ -34,8 +35,8 @@ function startEndShape(label)
   // add gradient fill
   [shapeFill setFillType: 1];
   var gradient = [shapeFill gradient];
-  [gradient setColor:[MSColor colorWithSVGString:"#FF5B37"] atIndex:0];
-  [gradient setColor:[MSColor colorWithSVGString:"#FB2B69"] atIndex:1];
+  [gradient setColor:[MSColor colorWithSVGString:readValueForKey(Settings.startEndColor1Key)] atIndex:0];
+  [gradient setColor:[MSColor colorWithSVGString:readValueForKey(Settings.startEndColor2Key)] atIndex:1];
 
   // add default inner shadow
   var innerShadows = [shapeStyle innerShadows];
