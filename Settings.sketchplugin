@@ -113,29 +113,29 @@ function createShapeColorsBox(y) {
 
   var shapeInnerShadowLabelFrame = NSMakeRect(10.0, Layout.shapeBoxElementSpacing * 4 + 40.0, Layout.defaultLabelWidth * 2, Layout.defaultLabelHeight);
   var shapeInnerShadowLabel = createLabel("Inner Shadow:", Layout.normalFont, Layout.fontColor, shapeInnerShadowLabelFrame);
-  var sShadow = readValueForKey(Settings.shapeInnerShadowKey);
+  var sShadow = readValueForKey(Keys.shapeInnerShadowKey);
   shapeInnerShadowCheckbox = createCheckboxAfterLabel(shapeInnerShadowLabel, sShadow);
 
-  var seColor1 = readValueForKey(Settings.startEndColor1Key);
-  var seColor2 = readValueForKey(Settings.startEndColor2Key);
+  var seColor1 = readValueForKey(Keys.startEndColor1Key);
+  var seColor2 = readValueForKey(Keys.startEndColor2Key);
   var startEnd = createColorsBoxForShape("Start / End", Layout.shapeBoxElementSpacing * 3, seColor1, seColor2);
   var startEndBox = startEnd[0];
   startEndColorFields = startEnd[1];
 
-  var pColor1 = readValueForKey(Settings.processColor1Key);
-  var pColor2 = readValueForKey(Settings.processColor2Key);
+  var pColor1 = readValueForKey(Keys.processColor1Key);
+  var pColor2 = readValueForKey(Keys.processColor2Key);
   var process = createColorsBoxForShape("Process", Layout.shapeBoxElementSpacing * 2, pColor1, pColor2);
   var processBox = process[0];
   processColorFields = process[1];
 
-  var dColor1 = readValueForKey(Settings.decisionColor1Key);
-  var dColor2 = readValueForKey(Settings.decisionColor2Key);
+  var dColor1 = readValueForKey(Keys.decisionColor1Key);
+  var dColor2 = readValueForKey(Keys.decisionColor2Key);
   var decision = createColorsBoxForShape("Decision", Layout.shapeBoxElementSpacing * 1, dColor1, dColor2);
   var decisionBox = decision[0];
   decisionColorFields = decision[1];
 
-  var ioColor1 = readValueForKey(Settings.inputOutputColor1Key);
-  var ioColor2 = readValueForKey(Settings.inputOutputColor2Key);
+  var ioColor1 = readValueForKey(Keys.inputOutputColor1Key);
+  var ioColor2 = readValueForKey(Keys.inputOutputColor2Key);
   var inputOutput = createColorsBoxForShape("Input / Output", Layout.shapeBoxElementSpacing * 0, ioColor1, ioColor2);
   var inputOutputBox = inputOutput[0];
   inputOutputColorFields = inputOutput[1];
@@ -154,22 +154,22 @@ function createLabelFontBox(y) {
 
   var fontNameLabelFrame = NSMakeRect(0.0, Layout.fontBoxElementSpacing * 3, Layout.defaultLabelWidth, Layout.defaultLabelHeight);
   var fontNameLabel = createLabel("Name:", Layout.normalFont, Layout.fontColor, fontNameLabelFrame);
-  var fName = readValueForKey(Settings.labelFontNameKey);
+  var fName = readValueForKey(Keys.labelFontNameKey);
   fontNameField = createTextFieldAfterLabel(fontNameLabel, fName, Layout.fontNameFieldWidth);
 
   var fontSizeLabelFrame = NSMakeRect(0.0, Layout.fontBoxElementSpacing * 2, Layout.defaultLabelWidth, Layout.defaultLabelHeight);
   var fontSizeLabel = createLabel("Size:", Layout.normalFont, Layout.fontColor, fontSizeLabelFrame);
-  var fSize = readValueForKey(Settings.labelFontSizeKey);
+  var fSize = readValueForKey(Keys.labelFontSizeKey);
   fontSizeField = createTextFieldAfterLabel(fontSizeLabel, fSize, Layout.fontSizeFieldWidth);
 
   var fontColorLabelFrame = NSMakeRect(0.0, Layout.fontBoxElementSpacing * 1, Layout.defaultLabelWidth, Layout.defaultLabelHeight);
   var fontColorLabel = createLabel("Color:", Layout.normalFont, Layout.fontColor, fontColorLabelFrame);
-  var fColor = readValueForKey(Settings.labelFontColorKey);
+  var fColor = readValueForKey(Keys.labelFontColorKey);
   fontColorField = createTextFieldAfterLabel(fontColorLabel, fColor, Layout.defaultFontColorFieldWidth);
 
   var fontShadowLabelFrame = NSMakeRect(0.0, Layout.fontBoxElementSpacing * 0, Layout.defaultLabelWidth, Layout.defaultLabelHeight);
   var fontShadowLabel = createLabel("Shadow:", Layout.normalFont, Layout.fontColor, fontShadowLabelFrame);
-  var fShadow = readValueForKey(Settings.labelDropShadowKey);
+  var fShadow = readValueForKey(Keys.labelDropShadowKey);
   fontShadowCheckbox = createCheckboxAfterLabel(fontShadowLabel, fShadow);
 
   var controls = [spacer, fontNameLabel, fontNameField, fontSizeLabel, fontSizeField, fontColorLabel, fontColorField, fontShadowLabel, fontShadowCheckbox];
@@ -202,11 +202,13 @@ function createFormInAlertWithMessage(message) {
 }
 
 function saveSettings() {
-  // get current values
+  // get values
   var fontName = [fontNameField stringValue];
   var fontSize = [fontSizeField stringValue];
   var fontColor = [fontColorField stringValue];
   var fontShadow = [fontShadowCheckbox intValue];
+
+  var shapeInnerShadow = [shapeInnerShadowCheckbox intValue];
 
   var startEndColor1Field = startEndColorFields[0];
   var startEndColor2Field = startEndColorFields[1];
@@ -228,31 +230,26 @@ function saveSettings() {
   var inputOutputColor1 = [inputOutputColor1Field stringValue];
   var inputOutputColor2 = [inputOutputColor2Field stringValue];
 
-  var shapeInnerShadow = [shapeInnerShadowCheckbox intValue];
+  // set values
 
-  // label font
-  writeValueForKey(Settings.labelFontNameKey, fontName);
-  writeValueForKey(Settings.labelFontSizeKey, fontSize);
-  writeValueForKey(Settings.labelFontColorKey, fontColor);
-  writeValueForKey(Settings.labelDropShadowKey, fontShadow);
+  writeValueForKey(Keys.labelFontNameKey, fontName);
+  writeValueForKey(Keys.labelFontSizeKey, fontSize);
+  writeValueForKey(Keys.labelFontColorKey, fontColor);
+  writeValueForKey(Keys.labelDropShadowKey, fontShadow);
 
-  // shape colors
-  writeValueForKey(Settings.startEndColor1Key, startEndColor1);
-  writeValueForKey(Settings.startEndColor2Key, startEndColor2);
-  writeValueForKey(Settings.processColor1Key, processColor1);
-  writeValueForKey(Settings.processColor2Key, processColor2);
-  writeValueForKey(Settings.decisionColor1Key, decisionColor1);
-  writeValueForKey(Settings.decisionColor2Key, decisionColor2);
-  writeValueForKey(Settings.inputOutputColor1Key, inputOutputColor1);
-  writeValueForKey(Settings.inputOutputColor2Key, inputOutputColor2);
-  writeValueForKey(Settings.shapeInnerShadowKey, shapeInnerShadow);
+  writeValueForKey(Keys.startEndColor1Key, startEndColor1);
+  writeValueForKey(Keys.startEndColor2Key, startEndColor2);
+  writeValueForKey(Keys.processColor1Key, processColor1);
+  writeValueForKey(Keys.processColor2Key, processColor2);
+  writeValueForKey(Keys.decisionColor1Key, decisionColor1);
+  writeValueForKey(Keys.decisionColor2Key, decisionColor2);
+  writeValueForKey(Keys.inputOutputColor1Key, inputOutputColor1);
+  writeValueForKey(Keys.inputOutputColor2Key, inputOutputColor2);
+  writeValueForKey(Keys.shapeInnerShadowKey, shapeInnerShadow);
 }
 
 function restoreDefaults() {
-  var keys = allSettingKeys();
-  for (var i = 0; i < keys.length; i++) {
-    restoreDefaultValueForKey(keys[i]);
-  }
+  for (var key in Keys) restoreDefaultValueForKey(Keys[key]);
 }
 
 function main() {

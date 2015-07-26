@@ -42,7 +42,7 @@ function connectSteps(drawConnections)
 	}
 }
 
-/*	style the label as defined in AELabelSettings.js	*/
+/*	style the label as defined in Settings	*/
 function styleStepTitle(label)
 {
 	// get current label position
@@ -51,9 +51,9 @@ function styleStepTitle(label)
 	var currentMidY = [currentFrame midY];
 
 	// label settings
-	[label setFontPostscriptName:readValueForKey(Settings.labelFontNameKey)];
-	[label setFontSize:readValueForKey(Settings.labelFontSizeKey)];
-	[label setTextColor:[MSColor colorWithSVGString:readValueForKey(Settings.labelFontColorKey)]];
+	[label setFontPostscriptName:readValueForKey(Keys.labelFontNameKey)];
+	[label setFontSize:readValueForKey(Keys.labelFontSizeKey)];
+	[label setTextColor:[MSColor colorWithSVGString:readValueForKey(Keys.labelFontColorKey)]];
 	[label setTextAlignment:2]; // center
 
 	// restore label position
@@ -61,7 +61,7 @@ function styleStepTitle(label)
 	[newFrame setMidX:currentMidX];
 	[newFrame setMidY:currentMidY];
 
-	if (readValueForKey(Settings.labelDropShadow) == 1) {
+	if (readValueForKey(Keys.labelDropShadow) == 1) {
 		// add default shadow
 		var shadows = [[label style] shadows];
 		if([shadows count] <= 0) [shadows addNewStylePart];
