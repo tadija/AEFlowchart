@@ -5,7 +5,7 @@
 @import 'AEFlowchart.cocoascript'
 @import 'Settings.cocoascript'
 
-function inputOutput(context) {
+function createInputOutputStep(context) {
   /*  call AEFlowchart main function with custom name and shape function  */
   createStep("InputOutput", inputOutputShape, context);
 }

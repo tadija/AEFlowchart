@@ -5,9 +5,9 @@
 @import 'AEFlowchart.cocoascript'
 @import 'Settings.cocoascript'
 
-function process(context) {
+function createProcessStep(context) {
   /*  call AEFlowchart main function with custom name and shape function  */
-  createStep("Process", processShape, context);  
+  createStep("Process", processShape, context);
 }
 
 /*  draw process rectangle shape for given label  */

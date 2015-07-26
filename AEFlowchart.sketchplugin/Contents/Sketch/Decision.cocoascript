@@ -5,9 +5,9 @@
 @import 'AEFlowchart.cocoascript'
 @import 'Settings.cocoascript'
 
-function decision(context) {
+function createDecisionStep(context) {
   /*  call AEFlowchart main function with custom name and shape function  */
-  createStep("Decision", decisionShape, context);  
+  createStep("Decision", decisionShape, context);
 }
 
 /*  draw decision diamond shape for given label  */

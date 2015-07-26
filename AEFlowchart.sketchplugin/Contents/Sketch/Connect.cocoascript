@@ -4,9 +4,9 @@
 
 @import 'AEFlowchart.cocoascript'
 
-function connect(context) {
+function createConnectionLines(context) {
   /*  call AEFlowchart main function with custom name and lineShape function  */
-  connectSteps(drawAllConnections, context);  
+  connectSteps(drawAllConnections, context);
 }
 
 function drawAllConnections(selection)

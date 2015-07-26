@@ -3,55 +3,55 @@
   "commands": [
     {
       "script": "StartEnd.cocoascript",
-      "handler": "startEnd",
+      "handler": "createStartEndStep",
       "shortcut": "ctrl shift s",
       "name": "Start / End",
       "identifier": "startEnd"
     },
     {
       "script": "Process.cocoascript",
-      "handler": "process",
+      "handler": "createProcessStep",
       "shortcut": "ctrl shift p",
       "name": "Process",
       "identifier": "process"
     },
     {
       "script": "Decision.cocoascript",
-      "handler": "decision",
+      "handler": "createDecisionStep",
       "shortcut": "ctrl shift d",
       "name": "Decision",
       "identifier": "decision"
     },
     {
       "script": "InputOutput.cocoascript",
-      "handler": "inputOutput",
+      "handler": "createInputOutputStep",
       "shortcut": "ctrl shift o",
       "name": "Input / Output",
       "identifier": "inputOutput"
     },
     {
       "script": "Connect.cocoascript",
-      "handler": "connect",
+      "handler": "createConnectionLines",
       "shortcut": "ctrl shift c",
       "name": "Connect",
       "identifier": "connect"
     },
     {
       "script": "SettingsUI.cocoascript",
-      "handler": "settings",
-      "shortcut": "",
+      "handler": "openSettings",
+      "shortcut": "ctrl shift ,",
       "name": "Settings",
       "identifier": "settings"
     }
   ],
   "menu": {
     "items": [
+      "settings",
       "startEnd",
-      "process",
-      "decision",
       "inputOutput",
-      "connect",
-      "settings"
+      "decision",
+      "process",
+      "connect"
     ]
   },
   "identifier": "net.tadija.sketch.AEFlowchart",

@@ -5,9 +5,9 @@
 @import 'AEFlowchart.cocoascript'
 @import 'Settings.cocoascript'
 
-function startEnd(context) {
+function createStartEndStep(context) {
   /*  call AEFlowchart main function with custom name and shape function  */
-  createStep("StartEnd", startEndShape, context);  
+  createStep("StartEnd", startEndShape, context);
 }
 
 /*  draw start-end rounded rectangle shape for given label  */

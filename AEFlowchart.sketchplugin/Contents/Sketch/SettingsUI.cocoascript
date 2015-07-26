@@ -305,6 +305,6 @@ function main() {
   }
 }
 
-function settings(context) {
+function openSettings(context) {
   main();
 }
