@@ -17,6 +17,7 @@ var Settings = {
   decisionColor2Key: "net.tadija.AEFlowchart.decisionColor2",
   inputOutputColor1Key: "net.tadija.AEFlowchart.inputOutputColor1",
   inputOutputColor2Key: "net.tadija.AEFlowchart.inputOutputColor2",
+  shapeInnerShadowKey: "net.tadija.AEFlowchart.shapeInnerShadow",
 
   // Default Values
   "net.tadija.AEFlowchart.labelFontName": "Andale Mono",
@@ -31,11 +32,12 @@ var Settings = {
   "net.tadija.AEFlowchart.decisionColor1": "#C644FC",
   "net.tadija.AEFlowchart.decisionColor2": "#5856D6",
   "net.tadija.AEFlowchart.inputOutputColor1": "#B4EC51",
-  "net.tadija.AEFlowchart.inputOutputColor2": "#429321"
+  "net.tadija.AEFlowchart.inputOutputColor2": "#429321",
+  "net.tadija.AEFlowchart.shapeInnerShadow": 1
 };
 
 function allSettingKeys() {
-  return [Settings.labelFontNameKey, Settings.labelFontSizeKey, Settings.labelFontColorKey, Settings.labelDropShadowKey, Settings.startEndColor1Key, Settings.startEndColor2Key, Settings.processColor1Key, Settings.processColor2Key, Settings.decisionColor1Key, Settings.decisionColor2Key, Settings.inputOutputColor1Key, Settings.inputOutputColor2Key];
+  return [Settings.labelFontNameKey, Settings.labelFontSizeKey, Settings.labelFontColorKey, Settings.labelDropShadowKey, Settings.startEndColor1Key, Settings.startEndColor2Key, Settings.processColor1Key, Settings.processColor2Key, Settings.decisionColor1Key, Settings.decisionColor2Key, Settings.inputOutputColor1Key, Settings.inputOutputColor2Key, Settings.shapeInnerShadowKey];
 }
 
 function readValueForKey(key) {

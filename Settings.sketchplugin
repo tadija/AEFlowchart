@@ -8,10 +8,12 @@ var fontNameField;
 var fontSizeField;
 var fontColorField;
 var fontShadowCheckbox;
+
 var startEndColorFields;
 var processColorFields;
 var decisionColorFields;
 var inputOutputColorFields;
+var shapeInnerShadowCheckbox;
 
 var Layout = {
   normalFont: [NSFont systemFontOfSize:12.0],
@@ -25,8 +27,8 @@ var Layout = {
 
   boxMargin: 16.0,
 
-  fontBoxSpacerFrame: NSMakeRect(0.0, 110.0, 320.0, 20.0),
-  fontBoxY: 370.0,
+  fontBoxSpacerFrame: NSMakeRect(0.0, 100.0, 320.0, 20.0),
+  fontBoxY: 400.0,
   fontBoxElementSpacing: 30.0,
   fontNameFieldWidth: 200.0,
   fontSizeFieldWidth: 40.0,
@@ -36,7 +38,7 @@ var Layout = {
   colorBoxSpacerFrame: NSMakeRect(0.0, 40.0, 200.0, 24.0),
   colorBoxLabelY: 30.0,
 
-  shapeBoxSpacerFrame: NSMakeRect(0.0, 280.0, 200.0, 45.0),
+  shapeBoxSpacerFrame: NSMakeRect(0.0, 280.0, 200.0, 80.0),
   shapeBoxElementSpacing: 70.0,
 
   mainBoxSpacerFrame: NSMakeRect(0.0, 530.0, 300.0, 20.0)
@@ -109,6 +111,11 @@ function createColorsBoxForShape(title, y, color1, color2) {
 function createShapeColorsBox(y) {
   var spacer = [[NSView alloc] initWithFrame:Layout.shapeBoxSpacerFrame];
 
+  var shapeInnerShadowLabelFrame = NSMakeRect(10.0, Layout.shapeBoxElementSpacing * 4 + 40.0, Layout.defaultLabelWidth * 2, Layout.defaultLabelHeight);
+  var shapeInnerShadowLabel = createLabel("Inner Shadow:", Layout.normalFont, Layout.fontColor, shapeInnerShadowLabelFrame);
+  var sShadow = readValueForKey(Settings.shapeInnerShadowKey);
+  shapeInnerShadowCheckbox = createCheckboxAfterLabel(shapeInnerShadowLabel, sShadow);
+
   var seColor1 = readValueForKey(Settings.startEndColor1Key);
   var seColor2 = readValueForKey(Settings.startEndColor2Key);
   var startEnd = createColorsBoxForShape("Start / End", Layout.shapeBoxElementSpacing * 3, seColor1, seColor2);
@@ -133,11 +140,11 @@ function createShapeColorsBox(y) {
   var inputOutputBox = inputOutput[0];
   inputOutputColorFields = inputOutput[1];
 
-  var controls = [spacer, startEndBox, processBox, decisionBox, inputOutputBox];
-  var box = createBoxForControls(controls, "Shape Colors", y);
+  var controls = [spacer, shapeInnerShadowLabel, shapeInnerShadowCheckbox, startEndBox, processBox, decisionBox, inputOutputBox];
+  var box = createBoxForControls(controls, "Shapes", y);
   [[box titleCell] setFont:Layout.boldFont];
   [[box titleCell] setTextColor:Layout.fontColor];
-  [box setTitle:"Shape Colors"];
+  [box setTitle:"Shapes"];
   [box sizeToFit];
   return box;
 }
@@ -221,6 +228,8 @@ function saveSettings() {
   var inputOutputColor1 = [inputOutputColor1Field stringValue];
   var inputOutputColor2 = [inputOutputColor2Field stringValue];
 
+  var shapeInnerShadow = [shapeInnerShadowCheckbox intValue];
+
   // label font
   writeValueForKey(Settings.labelFontNameKey, fontName);
   writeValueForKey(Settings.labelFontSizeKey, fontSize);
@@ -236,6 +245,7 @@ function saveSettings() {
   writeValueForKey(Settings.decisionColor2Key, decisionColor2);
   writeValueForKey(Settings.inputOutputColor1Key, inputOutputColor1);
   writeValueForKey(Settings.inputOutputColor2Key, inputOutputColor2);
+  writeValueForKey(Settings.shapeInnerShadowKey, shapeInnerShadow);
 }
 
 function restoreDefaults() {
