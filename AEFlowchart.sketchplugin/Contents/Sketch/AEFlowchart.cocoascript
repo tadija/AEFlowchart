@@ -67,7 +67,7 @@ function styleStepTitle(label)
 	[newFrame setMidX:currentMidX];
 	[newFrame setMidY:currentMidY];
 
-	if (readValueForKey(Keys.labelDropShadow) == 1) {
+	if (readValueForKey(Keys.labelDropShadowKey) == 1) {
 		// add default shadow
 		var shadows = [[label style] shadows];
 		if([shadows count] <= 0) [shadows addNewStylePart];
