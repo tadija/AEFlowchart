@@ -125,7 +125,7 @@ function sortByPosition(a,b)
 
 function getConnectionsGroup(parentGroup)
 {
-  var connectionsGroup = [parentGroup layerWithId:"AEConnections"];
+  var connectionsGroup = [parentGroup layerWithID:"AEConnections"];
 
   // create group if not exists
   if (connectionsGroup === null) {
