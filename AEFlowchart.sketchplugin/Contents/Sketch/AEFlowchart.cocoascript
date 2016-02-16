@@ -97,5 +97,5 @@ function groupStepLayers(stepName, label, shape)
 	[label setIsSelected:false];
 
 	// refresh group size
-	[newGroup resizeRoot:0];
+	[newGroup resizeToFitChildrenWithOption:1];
 }
