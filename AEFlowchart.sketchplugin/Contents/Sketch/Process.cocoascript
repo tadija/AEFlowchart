@@ -26,7 +26,7 @@ function processShape(label)
   [shapeFrame setHeight:[labelFrame height] + 30];
   [shapeFrame setMidX:[labelFrame midX]];
   [shapeFrame setMidY:[labelFrame midY]];
-  [shapeGroup setFrame: shapeFrame];
+  [shapeGroup resizeToFitChildrenWithOption:0];
 
   // set style
   var shapeStyle = [shapeGroup style];

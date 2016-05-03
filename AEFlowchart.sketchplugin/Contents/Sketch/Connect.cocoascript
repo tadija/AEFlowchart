@@ -129,9 +129,10 @@ function getConnectionsGroup(parentGroup)
 
   // create group if not exists
   if (connectionsGroup === null) {
-    connectionsGroup = [parentGroup addLayerOfType:"group"];
+    connectionsGroup = [[MSLayerGroup alloc] init];
     [connectionsGroup setName:"AEConnections"];
     [connectionsGroup setIsLocked:true];
+    [parentGroup addLayers:[connectionsGroup]];
   }
 
   return connectionsGroup;
