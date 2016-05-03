@@ -55,7 +55,7 @@
     ]
   },
   "identifier": "net.tadija.sketch.AEFlowchart",
-  "version": "2.0.2",
+  "version": "2.1.0",
   "description": "Diagram plugin that make it fast and easy to draw flowcharts and stuff.",
   "authorEmail": "tadija@me.com",
   "name": "AEFlowchart"
