@@ -80,8 +80,9 @@ function groupStepLayers(stepName, label, shape)
 	var parentGroup = [label parentGroup];
 
 	// create new group
-	var newGroup = [parentGroup addLayerOfType:"group"];
+	var newGroup = [[MSLayerGroup alloc] init];
 	[newGroup setName:stepName + " - " + [label stringValue]];
+	[parentGroup addLayers:[newGroup]];
 
 	// add shape to new group
 	[shape setName:stepName + " Shape - " + [label stringValue]];
