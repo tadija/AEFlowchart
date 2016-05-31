@@ -95,7 +95,7 @@ function drawOneConnection(twoSteps)
   // add border
   var lineShapeStyle = [lineShape style];
   var borders = [lineShapeStyle borders];
-  if([borders count] <= 0) [borders addNewStylePart];
+  if([borders count] <= 0) lineShapeStyle.addStylePartOfType(1);
   var border = [lineShapeStyle border];
   [border setColor:[MSColor colorWithSVGString:readValueForKey(Keys.connectionLineColorKey)]];
   [border setThickness:readValueForKey(Keys.connectionLineThicknessKey)];
