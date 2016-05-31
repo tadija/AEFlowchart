@@ -44,7 +44,7 @@ function decisionShape(label)
   // set style
   var shapeStyle = [shape style];
   var fills = [shapeStyle fills];
-  if([fills count] <= 0) [fills addNewStylePart];
+  if([fills count] <= 0) shapeStyle.addStylePartOfType(0);
   var shapeFill = [shapeStyle fill];
 
   // add gradient fill
@@ -56,7 +56,7 @@ function decisionShape(label)
   if (readValueForKey(Keys.shapeInnerShadowKey) == 1) {
     // add default inner shadow
     var innerShadows = [shapeStyle innerShadows];
-    if([innerShadows count] <= 0) [innerShadows addNewStylePart];
+    if([innerShadows count] <= 0) shapeStyle.addStylePartOfType(3);
   }
 
   return shape;

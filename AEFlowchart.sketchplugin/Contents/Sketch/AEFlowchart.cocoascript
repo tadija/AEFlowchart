@@ -69,8 +69,9 @@ function styleStepTitle(label)
 
 	if (readValueForKey(Keys.labelDropShadowKey) == 1) {
 		// add default shadow
+		var labelStyle = [label style];
 		var shadows = [[label style] shadows];
-		if([shadows count] <= 0) [shadows addNewStylePart];
+		if([shadows count] <= 0) labelStyle.addStylePartOfType(2);
 	}
 }
 
