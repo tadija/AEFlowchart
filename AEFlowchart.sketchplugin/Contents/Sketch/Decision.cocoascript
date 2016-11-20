@@ -50,8 +50,8 @@ function decisionShape(label)
   // add gradient fill
   [shapeFill setFillType: 1];
   var gradient = [shapeFill gradient];
-  [gradient setColor:[MSColor colorWithSVGString:readValueForKey(Keys.decisionColor1Key)] atIndex:0];
-  [gradient setColor:[MSColor colorWithSVGString:readValueForKey(Keys.decisionColor2Key)] atIndex:1];
+  [gradient setColor:colorForKey(Keys.decisionColor1Key) atIndex:0];
+  [gradient setColor:colorForKey(Keys.decisionColor2Key) atIndex:1];
 
   if (readValueForKey(Keys.shapeInnerShadowKey) == 1) {
     // add default inner shadow

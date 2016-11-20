@@ -37,8 +37,8 @@ function startEndShape(label)
   // add gradient fill
   [shapeFill setFillType: 1];
   var gradient = [shapeFill gradient];
-  [gradient setColor:[MSColor colorWithSVGString:readValueForKey(Keys.startEndColor1Key)] atIndex:0];
-  [gradient setColor:[MSColor colorWithSVGString:readValueForKey(Keys.startEndColor2Key)] atIndex:1];
+  [gradient setColor:colorForKey(Keys.startEndColor1Key) atIndex:0];
+  [gradient setColor:colorForKey(Keys.startEndColor2Key) atIndex:1];
 
   if (readValueForKey(Keys.shapeInnerShadowKey) == 1) {
     // add default inner shadow

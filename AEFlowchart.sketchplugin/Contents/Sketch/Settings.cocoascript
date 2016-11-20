@@ -60,3 +60,9 @@ function restoreDefaultValueForKey(key) {
   [[NSUserDefaults standardUserDefaults] removeObjectForKey:key];
   [[NSUserDefaults standardUserDefaults] synchronize];
 }
+
+function colorForKey(key) {
+  var hex = readValueForKey(key);
+  var color = MSImmutableColor.colorWithSVGString(hex).newMutableCounterpart();
+  return color;
+}
