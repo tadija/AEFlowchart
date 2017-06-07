@@ -1,5 +1,11 @@
 {
+  "name": "AEFlowchart",
+  "description": "Diagram plugin that make it fast and easy to draw flowcharts and stuff.",
+  "version": "2.2.0",
+  "identifier": "net.tadija.sketch.AEFlowchart",
+  "appcast": "https://github.com/tadija/AEFlowchart/blob/master/AEFlowchart.sketchplugin/Contents/Sketch/appcast.xml",
   "author": "tadija",
+  "authorEmail": "tadija@me.com",
   "commands": [
     {
       "script": "StartEnd.cocoascript",
@@ -53,11 +59,5 @@
       "process",
       "connect"
     ]
-  },
-  "identifier": "net.tadija.sketch.AEFlowchart",
-  "appcast": "https://github.com/tadija/AEFlowchart/blob/master/AEFlowchart.sketchplugin/Contents/Sketch/appcast.xml",
-  "version": "2.1.2",
-  "description": "Diagram plugin that make it fast and easy to draw flowcharts and stuff.",
-  "authorEmail": "tadija@me.com",
-  "name": "AEFlowchart"
+  }
 }
