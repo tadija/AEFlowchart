@@ -3,7 +3,7 @@
   <channel>
     <title>AEFlowchart</title>
     <link>https://github.com/tadija/AEFlowchart</link>
-    <description>Flowchart diagram plugin for Bohemian Coding Sketch app</description>
+    <description>Sketch plugin for fast and convenient creation of flowcharts</description>
     <language>en</language>
       <item>
         <title>Version 2.2.0</title>
@@ -15,6 +15,17 @@
           ]]>
         </description>
         <enclosure url="https://github.com/tadija/AEFlowchart/archive/2.2.0.zip" sparkle:version="2.2.0" />
+      </item>
+      <item>
+        <title>Version 2.2.1</title>
+        <description>
+          <![CDATA[
+            <ul>
+              <li>Minor fix for Sketch 45</li>
+            </ul>
+          ]]>
+        </description>
+        <enclosure url="https://github.com/tadija/AEFlowchart/archive/2.2.1.zip" sparkle:version="2.2.1" />
       </item>
   </channel>
 </rss>

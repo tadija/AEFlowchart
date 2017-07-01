@@ -1,6 +1,5 @@
 // Sketch Plugin: AEFlowchart - Decision (ctrl shift d)
 // Source: github.com/tadija/AEFlowchart
-// Version: 2.0
 
 @import 'AEFlowchart.cocoascript'
 @import 'Settings.cocoascript'
@@ -45,7 +44,7 @@ function decisionShape(label)
   var shapeStyle = [shape style];
   var fills = [shapeStyle fills];
   if([fills count] <= 0) shapeStyle.addStylePartOfType(0);
-  var shapeFill = [shapeStyle fill];
+  var shapeFill = [[shapeStyle fills] firstObject];
 
   // add gradient fill
   [shapeFill setFillType: 1];

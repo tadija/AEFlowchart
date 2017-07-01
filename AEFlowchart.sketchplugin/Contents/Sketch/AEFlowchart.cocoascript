@@ -1,6 +1,5 @@
 // Sketch Plugin: AEFlowchart (main library)
 // Source: github.com/tadija/AEFlowchart
-// Version: 2.0
 
 @import 'Settings.cocoascript'
 
@@ -96,7 +95,7 @@ function groupStepLayers(stepName, label, shape)
 	[parentGroup removeLayer:label];
 
 	// deselect label
-	[label setIsSelected:false];
+	label.isSelected = false;
 
 	// refresh group size
 	[newGroup resizeToFitChildrenWithOption:1];

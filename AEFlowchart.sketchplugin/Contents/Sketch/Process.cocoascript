@@ -1,6 +1,5 @@
 // Sketch Plugin: AEFlowchart - Process (ctrl shift p)
 // Source: github.com/tadija/AEFlowchart
-// Version: 2.0
 
 @import 'AEFlowchart.cocoascript'
 @import 'Settings.cocoascript'
@@ -32,7 +31,7 @@ function processShape(label)
   var shapeStyle = [shapeGroup style];
   var fills = [shapeStyle fills];
   if([fills count] <= 0) shapeStyle.addStylePartOfType(0);
-  var shapeFill = [shapeStyle fill];
+  var shapeFill = [[shapeStyle fills] firstObject];
 
   // add gradient fill
   [shapeFill setFillType: 1];
