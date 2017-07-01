@@ -96,7 +96,7 @@ function drawOneConnection(twoSteps)
   var lineShapeStyle = [lineShape style];
   var borders = [lineShapeStyle borders];
   if([borders count] <= 0) lineShapeStyle.addStylePartOfType(1);
-  var border = [lineShapeStyle border];
+  var border = [[lineShapeStyle borders] firstObject];
   [border setColor:colorForKey(Keys.connectionLineColorKey)];
   [border setThickness:readValueForKey(Keys.connectionLineThicknessKey)];
 
@@ -104,8 +104,8 @@ function drawOneConnection(twoSteps)
   [connectionsGroup addLayers:[lineShape]];
 
   // deselect steps
-  [firstStep setIsSelected:false];
-  [secondStep setIsSelected:false];
+  firstStep.isSelected = false;
+  secondStep.isSelected = false;
 }
 
 function sortByPosition(a,b)

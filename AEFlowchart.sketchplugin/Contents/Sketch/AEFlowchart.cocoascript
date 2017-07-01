@@ -96,7 +96,7 @@ function groupStepLayers(stepName, label, shape)
 	[parentGroup removeLayer:label];
 
 	// deselect label
-	[label setIsSelected:false];
+	label.isSelected = false;
 
 	// refresh group size
 	[newGroup resizeToFitChildrenWithOption:1];

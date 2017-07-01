@@ -43,7 +43,7 @@ function inputOutputShape(label)
   var shapeStyle = [shape style];
   var fills = [shapeStyle fills];
   if([fills count] <= 0) shapeStyle.addStylePartOfType(0);
-  var shapeFill = [shapeStyle fill];
+  var shapeFill = [[shapeStyle fills] firstObject];
 
   // add gradient fill
   [shapeFill setFillType: 1];
