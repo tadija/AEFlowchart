@@ -1,7 +1,7 @@
 {
   "name": "AEFlowchart",
-  "description": "Diagram plugin that make it fast and easy to draw flowcharts and stuff.",
-  "version": "2.2.0",
+  "description": "Sketch plugin for fast and convenient creation of flowcharts",
+  "version": "2.2.1",
   "identifier": "net.tadija.sketch.AEFlowchart",
   "appcast": "https://github.com/tadija/AEFlowchart/blob/master/AEFlowchart.sketchplugin/Contents/Sketch/appcast.xml",
   "author": "tadija",
