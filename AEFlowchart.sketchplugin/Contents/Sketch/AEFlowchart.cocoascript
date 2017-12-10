@@ -3,100 +3,95 @@
 
 @import 'Settings.cocoascript'
 
-/*	this is the method which should be called from AEFlowchart plugins
-		- elementName should be string which will be used for items naming
-		- drawShape should be method which returns some shape for the given label	*/
+/*  this is the method which should be called from AEFlowchart plugins
+    - elementName should be string which will be used for items naming
+    - drawShape should be method which returns some shape for the given label */
 function createStep(stepName, drawShape, context)
 {
-	var selection = context.selection;
-	var doc = context.document;
+  var selection = context.selection;
+  var doc = context.document;
 
-	if([selection count] == 0) {
-		[doc showMessage:"Oops, you have to select some text layer"];
-	}
-	else {
-		// iterate selected items
-		var loop = [selection objectEnumerator];
-		while (label = [loop nextObject]) {
-
-			// create flowchart shapes from text
-			if ([label class] === MSTextLayer) {
-
-				styleStepTitle(label);
-				var shape = drawShape(label);
-				groupStepLayers(stepName, label, shape);
-
-			}
-			else {
-				[doc showMessage:"Sorry, you have to select text layer"];
-			}
-		}
-	}
+  if([selection count] == 0) {
+    [doc showMessage:"Oops, you have to select some text layer"];
+  } else {
+    // iterate selected items
+    var loop = [selection objectEnumerator];
+    while (label = [loop nextObject]) {
+      // create flowchart shapes from text
+      if ([label class] === MSTextLayer) {
+        styleStepTitle(label);
+        var shape = drawShape(label);
+        groupStepLayers(stepName, label, shape);
+      } else {
+        [doc showMessage:"Sorry, you have to select text layer"];
+      }
+    }
+  }
 }
 
-/*	draw connection lines between selected objects (from top to bottom)	*/
+/*  draw connection lines between selected objects (from top to bottom) */
 function connectSteps(drawConnections, context)
 {
-	var selection = context.selection;
-	var doc = context.document;
+  var selection = context.selection;
+  var doc = context.document;
 
-	if([selection count] < 2) {
-		[doc showMessage:"Oops, you have to select at least two layers"];
-	} else {
-		drawConnections(selection);
-	}
+  if([selection count] < 2) {
+    [doc showMessage:"Oops, you have to select at least two layers"];
+  } else {
+    drawConnections(selection);
+  }
 }
 
-/*	style the label as defined in Settings	*/
+/*  style the label as defined in Settings  */
 function styleStepTitle(label)
 {
-	// get current label position
-	var currentFrame = [label frame];
-	var currentMidX = [currentFrame midX];
-	var currentMidY = [currentFrame midY];
+  // get current label position
+  var currentFrame = [label frame];
+  var currentMidX = [currentFrame midX];
+  var currentMidY = [currentFrame midY];
 
-	// label settings
-	[label setFontPostscriptName:readValueForKey(Keys.labelFontNameKey)];
-	[label setFontSize:readValueForKey(Keys.labelFontSizeKey)];
-	[label setTextColor:colorForKey(Keys.labelFontColorKey)];
-	[label setTextAlignment:2]; // center
+  // label settings
+  [label setFontPostscriptName:readValueForKey(Keys.labelFontNameKey)];
+  [label setFontSize:readValueForKey(Keys.labelFontSizeKey)];
+  [label setTextColor:colorForKey(Keys.labelFontColorKey)];
+  [label setTextAlignment:2]; // center
 
-	// restore label position
-	var newFrame = [label frame];
-	[newFrame setMidX:currentMidX];
-	[newFrame setMidY:currentMidY];
+  // restore label position
+  var newFrame = [label frame];
+  [newFrame setMidX:currentMidX];
+  [newFrame setMidY:currentMidY];
 
-	if (readValueForKey(Keys.labelDropShadowKey) == 1) {
-		// add default shadow
-		var labelStyle = [label style];
-		var shadows = [[label style] shadows];
-		if([shadows count] <= 0) labelStyle.addStylePartOfType(2);
-	}
+  if (readValueForKey(Keys.labelDropShadowKey) == 1) {
+    // add default shadow
+    var labelStyle = [label style];
+    var shadows = [[label style] shadows];
+    if([shadows count] <= 0) labelStyle.addStylePartOfType(2);
+  }
 }
 
-/*	group and name the label and shape layers	*/
+/*  group and name the label and shape layers */
 function groupStepLayers(stepName, label, shape)
 {
-	var parentGroup = [label parentGroup];
+  var parentGroup = [label parentGroup];
 
-	// create new group
-	var newGroup = [[MSLayerGroup alloc] init];
-	[newGroup setName:stepName + " - " + [label stringValue]];
-	[parentGroup addLayers:[newGroup]];
+  // create new group
+  var newGroup = [[MSLayerGroup alloc] init];
+  [newGroup setName:stepName + " - " + [label stringValue]];
+  [parentGroup addLayers:[newGroup]];
 
-	// add shape to new group
-	[shape setName:stepName + " Shape - " + [label stringValue]];
-	[newGroup addLayers:[shape]];
-	[parentGroup removeLayer:shape];
+  // add shape to new group
+  [shape setName:stepName + " Shape - " + [label stringValue]];
+  [newGroup addLayers:[shape]];
+  [parentGroup removeLayer:shape];
 
-	// add label to new group
-	[label setName:stepName + " Label - " + [label stringValue]];
-	[newGroup addLayers:[label]];
-	[parentGroup removeLayer:label];
+  // add label to new group
+  [label setName:stepName + " Label - " + [label stringValue]];
+  [newGroup addLayers:[label]];
+  [parentGroup removeLayer:label];
 
-	// deselect label
-	label.isSelected = false;
+  // deselect label
+  label.isSelected = false;
 
-	// refresh group size
-	[newGroup resizeToFitChildrenWithOption:1];
+  // refresh group size
+  [newGroup resizeToFitChildrenWithOption:1];
 }

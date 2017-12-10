@@ -1,6 +1,6 @@
 # AEFlowchart
 
-**Sketch plugin for fast and convenient creation of flowcharts.**
+**Sketch plugin for fast and convenient creation of flowchart diagrams**
 
 > Basically, you add some text labels, convert them to appropriate flowchart shapes and then connect them.  
 Oh, and you can also customize the look very much via [settings](http://tadija.net/projects/AEFlowchart/AEFlowchart-Settings.png).

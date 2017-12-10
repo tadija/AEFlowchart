@@ -62,6 +62,6 @@ function restoreDefaultValueForKey(key) {
 
 function colorForKey(key) {
   var hex = readValueForKey(key);
-  var color = MSImmutableColor.colorWithSVGString(hex).newMutableCounterpart();
+  var color = MSImmutableColor.colorWithSVGString(hex);
   return color;
 }
