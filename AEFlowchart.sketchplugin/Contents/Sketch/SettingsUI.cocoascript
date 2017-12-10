@@ -122,9 +122,6 @@ function createLabelFontBox(y) {
   var controls = [spacer, fontNameLabel, fontNameField, fontSizeLabel, fontSizeField, fontColorLabel, fontColorField, fontShadowLabel, fontShadowCheckbox];
   var box = createBoxForControls(controls, "Label Font", y);
   [[box titleCell] setTextColor:Layout.fontColor];
-  // [[box titleCell] setFont:Layout.boldFont];
-  // [box setTitle:"Label Font"];
-  // [box sizeToFit];
   [box setTitleFont:Layout.bigBoldFont];
   [box setTitlePosition:NSBelowTop];
   return box;
