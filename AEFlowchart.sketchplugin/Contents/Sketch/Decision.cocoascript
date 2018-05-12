@@ -38,7 +38,7 @@ function decisionShape(label)
   [shapePath closePath];
 
   // create shape
-  var shape = [MSShapeGroup shapeWithBezierPath: shapePath];
+  var shape = [MSShapeGroup shapeWithBezierPath: MSPath.pathWithBezierPath(shapePath)];
 
   // set style
   var shapeStyle = [shape style];
