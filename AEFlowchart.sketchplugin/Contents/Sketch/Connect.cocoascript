@@ -87,8 +87,7 @@ function drawOneConnection(twoSteps)
   }
 
   // create vector line
-  var lineShape = [[MSShapeGroup alloc] init];
-  [lineShape setBezierPath: lineBezierPath];
+  var lineShape = [MSShapeGroup shapeWithBezierPath: MSPath.pathWithBezierPath(lineBezierPath)];
   [lineShape setName:[firstStep name] + " -> " + [secondStep name]];
 
   // add border

@@ -38,5 +38,16 @@
         </description>
         <enclosure url="https://github.com/tadija/AEFlowchart/archive/2.2.2.zip" sparkle:version="2.2.2" />
       </item>
+      <item>
+        <title>Version 2.2.3</title>
+        <description>
+          <![CDATA[
+            <ul>
+              <li>Fixed for Sketch 50</li>
+            </ul>
+          ]]>
+        </description>
+        <enclosure url="https://github.com/tadija/AEFlowchart/archive/2.2.3.zip" sparkle:version="2.2.3" />
+      </item>
   </channel>
 </rss>
