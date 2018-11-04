@@ -36,7 +36,7 @@ function inputOutputShape(label)
   [shapePath closePath];
 
   // create shape
-  var shape = [MSShapeGroup shapeWithBezierPath: MSPath.pathWithBezierPath(shapePath)];
+  var shape = [MSShapeGroup layerWithPath: MSPath.pathWithBezierPath(shapePath)];
 
   // set style
   var shapeStyle = [shape style];

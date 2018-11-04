@@ -15,8 +15,7 @@ function processShape(label)
   // create shape
   var parentGroup = [label parentGroup];
   var shape = [[MSRectangleShape alloc] init];
-  var shapeGroup = MSShapeGroup.shapeWithPath(shape);
-  [parentGroup addLayers:[shapeGroup]];
+  [parentGroup addLayers:[shape]];
 
   // set frame
   var labelFrame = [label frame];
@@ -25,10 +24,9 @@ function processShape(label)
   [shapeFrame setHeight:[labelFrame height] + 30];
   [shapeFrame setMidX:[labelFrame midX]];
   [shapeFrame setMidY:[labelFrame midY]];
-  [shapeGroup resizeToFitChildrenWithOption:0];
 
   // set style
-  var shapeStyle = [shapeGroup style];
+  var shapeStyle = [shape style];
   var fills = [shapeStyle fills];
   if([fills count] <= 0) shapeStyle.addStylePartOfType(0);
   var shapeFill = [[shapeStyle fills] firstObject];
@@ -45,5 +43,5 @@ function processShape(label)
     if([innerShadows count] <= 0) shapeStyle.addStylePartOfType(3);
   }
 
-  return shapeGroup;
+  return shape;
 }

@@ -15,8 +15,7 @@ function startEndShape(label)
   // create shape
   var parentGroup = [label parentGroup];
   var shape = [[MSRectangleShape alloc] init];
-  var shapeGroup = MSShapeGroup.shapeWithPath(shape);
-  [parentGroup addLayers:[shapeGroup]];
+  [parentGroup addLayers:[shape]];
 
   // set frame
   var labelFrame = [label frame];
@@ -25,10 +24,9 @@ function startEndShape(label)
   [shapeFrame setHeight:[labelFrame height] + 20];
   [shapeFrame setMidX:[labelFrame midX]];
   [shapeFrame setMidY:[labelFrame midY]];
-  [shapeGroup resizeToFitChildrenWithOption:0];
 
   // set style
-  var shapeStyle = [shapeGroup style];
+  var shapeStyle = [shape style];
   var fills = [shapeStyle fills];
   if([fills count] <= 0) shapeStyle.addStylePartOfType(0);
   var shapeFill = [[shapeStyle fills] firstObject];
@@ -52,8 +50,7 @@ function startEndShape(label)
   } else {
     radius = [shapeFrame width] / 2;
   }
-  var firstObject = [[shapeGroup layers] firstObject];
-  [firstObject setCornerRadiusFloat:Math.round(radius)];
+  [shape setCornerRadiusFloat:Math.round(radius)];
 
-  return shapeGroup;
+  return shape;
 }
